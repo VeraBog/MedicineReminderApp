@@ -24,7 +24,7 @@ const Welcome_Screen = () => {
         <MyRectangle />
         <PillReminder />
         <ReminderText/>
-        <ButtonGroup navigation={navigation}/>
+        <ButtonGroup navigation={navigation}/> 
         
       </View>
     </View>

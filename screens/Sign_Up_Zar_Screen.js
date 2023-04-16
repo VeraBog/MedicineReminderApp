@@ -19,12 +19,14 @@ const Sign_Up_Zar_Screen = () => {
         <FrameComponent/>
         
           <MyRectangle/> 
-          <LoginText/>
+          <ZarejestrujText/>
           <Login/>
           <BoxL/>
+          <Name/>
+          <BoxN/>
           <Password/>
           <BoxH/>
-          <Sign_in_btn/>
+          <Sign_up_btn navigation={navigation}/>
 
         </View>
         
@@ -81,9 +83,9 @@ const MyRectangle = () => {
         );
         };
 
-const LoginText = () => {
+const ZarejestrujText = () => {
   return ( <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'positive',bottom: '45%', alignSelf: 'center', zIndex: 1 }}>
-     <Text style={{ color: '#fff', fontSize: 34, fontFamily: 'Helvetica-Bold', lineHeight: 42, textAlign: 'center' }}>Zaloguj się</Text>
+     <Text style={{ color: '#fff', fontSize: 34, fontFamily: 'Helvetica-Bold', lineHeight: 42, textAlign: 'center' }}>Zarejestruj się</Text>
      </Animatable.View>);
 };
 
@@ -140,6 +142,59 @@ const BoxL = () => {
     },
   });
 
+  const Name = () => {
+    return ( <Animatable.View animation="fadeIn" easing="ease-in-out" 
+    style={{ position: 'positive',bottom: '38%', left:"13%", alignSelf: 'left', zIndex: 1 }}>
+     <Text style={{ color: '#fff', fontSize: 24, fontFamily: 'Helvetica-Bold', lineHeight: 32, textAlign: 'center' }}>Imię</Text>
+     </Animatable.View>);
+                  
+};
+
+const BoxN = () => {
+    return (
+      <View style={stylesN.container}>
+        <View style={stylesN.shadows}>
+          <View style={stylesN.shapes}>
+            <Text style={stylesN.text}>Imię</Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
+  
+  const stylesN = StyleSheet.create({
+    container: {
+      width: 330,
+      height: 50,
+      backgroundColor: '#fff',
+      borderRadius: 10,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 1,
+      shadowRadius: 4,
+      elevation: 5,
+      bottom:"37%"
+    },
+    shadows: {
+      flex: 1,
+      borderRadius: 10,
+      overflow: 'hidden',
+    },
+    shapes: {
+      flex: 1,
+      backgroundColor: '#D8FFFA',
+      borderRadius: 10,
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    text: {
+      color: '#808080',
+      fontSize: 18,
+      fontWeight: 'bold',
+      left:"-42%"
+    },
+  });
+
   const Password = () => {
     return ( <Animatable.View animation="fadeIn" easing="ease-in-out" 
     style={{ position: 'positive',bottom: '35%', left:"13%", alignSelf: 'left', zIndex: 1 }}>
@@ -193,18 +248,22 @@ const BoxH = () => {
     },
   });
   
-const Sign_in_btn = () => {
+const Sign_up_btn = ({navigation}) => {
     return (
+      
         <View style={stylesB.view}>
           <View style={stylesB.shadows}>
             <View style={stylesB.shadowLayer}></View>
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
           <View style={stylesB.shapes}>
             <View style={stylesB.shapeLayer}>
-              <Text style={stylesB.text}>Zaloguj się</Text>
+              <Text style={stylesB.text}>Zarejestruj się</Text>
             </View>
           </View>
+          </TouchableOpacity>
         </View>
+        
       );
     };
     

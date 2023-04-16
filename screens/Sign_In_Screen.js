@@ -25,7 +25,7 @@ const Sign_In_Screen = () => {
           <BoxL/>
           <Password/>
           <BoxH/>
-          <Sign_in_btn/>
+          <Sign_in_btn navigation={navigation}/>
 
         </View>
         
@@ -194,18 +194,23 @@ const BoxH = () => {
     },
   });
   
-const Sign_in_btn = () => {
+const Sign_in_btn = ({ navigation }) => {
     return (
+     
         <View style={stylesB.view}>
           <View style={stylesB.shadows}>
             <View style={stylesB.shadowLayer}></View>
           </View>
+          <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
           <View style={stylesB.shapes}>
             <View style={stylesB.shapeLayer}>
               <Text style={stylesB.text}>Zaloguj się</Text>
+             
             </View>
           </View>
+          </TouchableOpacity>
         </View>
+      
       );
     };
     
