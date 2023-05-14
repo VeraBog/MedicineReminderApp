@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+
 import { StyleSheet, Text, View } from 'react-native';
 import { TailwindProvider } from 'tailwindcss-react-native';
 import { NavigationContainer } from '@react-navigation/native';
@@ -16,6 +16,37 @@ import MedList_Screen from './screens/MedList_Screen';
 const Stack = createNativeStackNavigator();
 
 export default function App() {
+
+  useEffect(() => {
+    const connectToMongoDB = async () => {
+      const { MongoClient } = require('mongodb');
+      const uri = "mongodb+srv://Weronika:<password>@dataproject.g2eom2h.mongodb.net/?retryWrites=true&w=majority";
+
+      // Create a MongoClient with a MongoClientOptions object to set the Stable API version
+      const client = new MongoClient(uri, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      });
+
+      try {
+        // Connect the client to the server
+        await client.connect();
+        console.log("Connected to MongoDB!");
+
+        // Do something with the connected client, such as querying or updating data
+        // ...
+
+      } catch (error) {
+        console.log("Error connecting to MongoDB:", error);
+      } finally {
+        // Ensure that the client will close when you finish/error
+        await client.close();
+        console.log("Disconnected from MongoDB!");
+      }
+    };
+
+    connectToMongoDB();
+  }, []);
   return (
     <TailwindProvider>
     <NavigationContainer>
