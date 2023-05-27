@@ -195,7 +195,19 @@ const BoxH = () => {
   });
   
 const Sign_in_btn = ({ navigation }) => {
-    return (
+  const onPressSignIn = async () => {
+    console.log("Trying sign in with user: " + email);
+    try {
+      await signIn(email, password);
+    } catch (error) {
+      const errorMessage = `Failed to sign in: ${error.message}`;
+      console.error(errorMessage);
+      Alert.alert(errorMessage);
+    }
+  };
+  
+  
+  return (
      
         <View style={stylesB.view}>
           <View style={stylesB.shadows}>

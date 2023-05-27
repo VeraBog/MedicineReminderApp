@@ -1,5 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity,TextInput, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 
@@ -12,7 +12,8 @@ const Sign_Up_Zar_Screen = () => {
           headerShown:false,
        });
     }, [] ); // tu się w sumie usuwa nagłowek
-    
+    const [Login, setLogin] = useState("");
+    const [password, setPassword] = useState("");
     return (
         <View style={{ backgroundColor: '#24cccc', width: 428, height: 926, borderRadius: 34 }}>
          <View style={{ position: 'positive', top: 50, width: '100%', height: '80%', alignItems: 'center' }}>
@@ -21,11 +22,17 @@ const Sign_Up_Zar_Screen = () => {
           <MyRectangle/> 
           <ZarejestrujText/>
           <Login/>
-          <BoxL/>
+          <BoxL TextInput          
+          placeholder="Login"
+          autoCapitalize="none" />
           <Name/>
-          <BoxN/>
+          <BoxN TextInput          
+          placeholder="Name"
+          autoCapitalize="none"/>
           <Password/>
-          <BoxH/>
+          <BoxH TextInput          
+          placeholder="Password"
+          secureTextEntry/>
           <Sign_up_btn navigation={navigation}/>
 
         </View>
@@ -249,7 +256,21 @@ const BoxH = () => {
   });
   
 const Sign_up_btn = ({navigation}) => {
-    return (
+    
+  const onPressSignUp = async () => {
+    console.log("Trying signup with user: " + email);
+    try {
+      await signUp(email, password);                  // lets see here 
+      signIn(email, password);
+    } catch (error) {
+      const errorMessage = `Failed to sign up: ${error.message}`;
+      console.error(errorMessage);
+      Alert.alert(errorMessage);
+    }
+  };
+  
+  
+  return (
       
         <View style={stylesB.view}>
           <View style={stylesB.shadows}>
