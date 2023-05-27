@@ -16,6 +16,7 @@
     "expo": "~48.0.9",
     "expo-status-bar": "~1.4.4",
     "express": "^4.18.2",
+    "git-filter-repo": "^0.0.30",
     "mongodb": "^5.5.0",
     "mongoose": "^7.1.1",
     "react": "18.2.0",
