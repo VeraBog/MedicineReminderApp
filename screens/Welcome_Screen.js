@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { StatusBar} from 'expo-status-bar';
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect,useState } from 'react';
+
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import Sign_In_Screen from './Sign_In_Screen';

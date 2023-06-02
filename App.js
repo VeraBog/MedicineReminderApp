@@ -13,6 +13,7 @@ import SoundSwitch from './screens/SoundSwitch';
 import Profil_Screen from './screens/Profil_Screen';
 import MedList_Screen from './screens/MedList_Screen';
 
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
