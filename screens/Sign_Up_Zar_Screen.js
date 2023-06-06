@@ -6,7 +6,7 @@ import * as Animatable from 'react-native-animatable';
 //import createUser from './providers/createUser';
 //const createUser = require('./providers/createUser');
 //import UserController from 'C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/controller/UserController';
-import { createUser } from 'C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/controller/UserController';
+import { createUser } from '../controller/UserController';
 //import {createUser} from 'UserController'
 //import createUser from 'C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/server.js'
 
@@ -30,7 +30,7 @@ const Sign_Up_Zar_Screen = () => {
   };
   const handleSignUp = async () => {
     try {
-      console.log('tekst');
+     // console.log('tekst');
       const loginValue = login;
       const nameValue = name;
       const passwordValue = password;
@@ -50,14 +50,16 @@ const Sign_Up_Zar_Screen = () => {
 
       //await createUser(loginValue, nameValue, passwordValue);
 
-      axios
-        .post("https://localhost:8000/Sign_Up_Zar_Screen", {
-          login: loginValue,
+      axios.post("http://192.168.0.6:8000/Sign_Up_Zar_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
+          login: loginValue,                                      // było 
           name: nameValue,
           password: passwordValue,
         })
-        .then((response) => console.log(response))
-        .catch((err) => console.log(err));
+        .then((response) => {
+          console.log("RESP");
+          Alert.alert('Dodano użytkownika'); // w sumie to nie wiem czemu nie ma komunikatu
+        })
+        .catch((err) => console.log("ERR",err));
 
 
       // console.log(typeof createUser); // Verify that it logs "function" to the console
@@ -73,7 +75,7 @@ const Sign_Up_Zar_Screen = () => {
 
 
       // Przejdź do ekranu logowania lub innego ekranu docelowego
-      navigation.navigate('Main_Screen');
+      navigation.navigate('Welcome_Screen');
     } catch (error) {
       console.error(error);
       Alert.alert('Wystąpił błąd podczas rejestracji');
@@ -170,7 +172,7 @@ const FrameComponent = () => {
         <Animatable.Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={require('C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/assets/pill_icon.jpg')}
+          source={require('../assets/pill_icon.jpg')}
           style={{ width: 100, height: 100 }}
         />
       </View>
@@ -386,7 +388,7 @@ const styl = StyleSheet.create({
 const Sign_up_btn = ({ navigation, onPress }) => {
   const handlePress = () => {
     onPress(); // Wywołaj funkcję onPress
-    navigation.navigate("Main_Screen"); // Przejdź do ekranu "Main_Screen"
+    navigation.navigate("Welcome_Screen"); // Przejdź do ekranu "Main_Screen"
   };
 
   return (

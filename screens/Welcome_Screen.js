@@ -70,7 +70,7 @@ return (
             <Animatable.Image
                 animation="fadeIn"
                 easing="ease-in-out"
-                source={require('C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/assets/pill_icon.jpg')}
+                source={require('../assets/pill_icon.jpg')}
                 style={{ width: 100, height: 100 }}
             />
         </View>

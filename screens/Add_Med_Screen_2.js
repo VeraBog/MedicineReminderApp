@@ -1,70 +1,133 @@
-import React, { useLayoutEffect,useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity,
+import React, { useLayoutEffect, useState } from 'react';
+import {
+  StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity,
   Platform,
-  Dimensions, } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+  Dimensions,
+} from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as Animatable from 'react-native-animatable';
 import { AntDesign } from '@expo/vector-icons'; // to do ikonki  głośnika
 import Icon from 'react-native-vector-icons/FontAwesome'; // to do kalendarza i w sumie do domku
 import IonIcon from 'react-native-vector-icons/Ionicons'; // do tabletki
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import axios from 'axios';
 
+const Add_Med_Screen_2 = () => {  // albo w tym route?
 
-const Add_Med_Screen_2 = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  const { nazwa, typLeku, komentarz } = route.params;
+  const [date, setDate] = useState(new Date());
+  const [time, setTime] = useState('');
 
-    const navigation = useNavigation();
-    
-    useLayoutEffect(()=> {
-        navigation.setOptions({
-          headerShown:false,
-       });
-    }, [] ); // tu się w sumie usuwa nagłowek
-    return (
-      <View
-        style={{
-          width: 428,
-          height: 926,
-          backgroundColor: '#0C1320',
-          borderRadius: 34,
-          //backgroundColor: 'rgba(12, 35, 64, 1)',
-        }}>
-        
-        <NotificationIcon/>
-        <Speaker/>
-        <AddText/>
-        
-        <SafeAreaView style={{ flex: 1 }}>
-      <DateTimePickerScreen />
-    </SafeAreaView>
-        <NextButton navigation={navigation}/>
-        <DolnyPanel/>
-        <HomeIcon navigation={navigation}/>
-        <PillIcon/>
-        <HeadIcon/>
-      </View>
-    );
+  const handleDateChange = (event, selectedDate) => {
+    setDate(selectedDate || date);
   };
 
-  const NotificationIcon = () => {
-    return (
-     <TouchableOpacity>
-       <View style={{ top:'270%', left:'5%' }}>
-         <IonIcon name="notifications" size={30} color="#24CCCC" />
-         <Text style={{position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12}}>1</Text>
-       </View>
-       </TouchableOpacity>
-     );
-   };
+  const handleTimeChange = (event, selectedTime) => {
+    setTime(selectedTime || time);
+  };
 
-   const Speaker = () => {
-    return (
-      <TouchableOpacity>
-      <View style={styles.volumeDownContainer}>
-      <View style={styles.volumeDownIcon}>
-        <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />
-      </View>
+  /* const [data, setData] = useState({
+     nazwa: nazwa || '',
+     typLeku: typLeku || '',
+     komentarz: komentarz || '',});*/
+
+  
+
+
+  const handleAddMed = async () => {
+    try {
+      // console.log('tekst');
+      const nazwaValue = nazwa || '';
+      const typLekuValue = typLeku || '';
+      const komentarzValue = komentarz || '';
+      const dateValue = date;
+      const timeValue = time;
+
+      console.log(nazwa, typLeku, komentarz, date, time);
+
+
+      axios.post("http://192.168.0.6:8000/Add_Med_Screen_2", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
+        nazwa: nazwaValue,                                      // było 
+        typLeku: typLekuValue,
+        komentarz: komentarzValue,
+        dateValue: date,
+        timeValue: time,
+      })
+        .then((response) => {
+          console.log("RESP");
+          Alert.alert('Dodano Leki'); // w sumie to nie wiem czemu nie ma komunikatu
+        })
+        .catch((err) => console.log("ERR", err));
+
+
+
+
+
+
+      navigation.navigate('Main_Screen');
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Wystąpił błąd podczas dodawania leku');
+    }
+  };
+
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerShown: false,
+    });
+  }, []); // tu się w sumie usuwa nagłowek
+  return (
+    <View
+      style={{
+        width: 428,
+        height: 926,
+        backgroundColor: '#0C1320',
+        borderRadius: 34,
+
+      }}>
+
+      <NotificationIcon />
+      <Speaker />
+      <AddText />
+
+      <SafeAreaView style={{ flex: 1 }}>
+        <DateTimePickerScreen date={date}
+          setDate={setDate}
+          time={time}
+          setTime={setTime} />
+      </SafeAreaView>
+      <NextButton navigation={navigation} onPress={handleAddMed} />
+      <DolnyPanel />
+      <HomeIcon navigation={navigation} />
+      <PillIcon />
+      <HeadIcon />
     </View>
+  );
+};
+
+const NotificationIcon = () => {
+  return (
+    <TouchableOpacity>
+      <View style={{ top: '270%', left: '5%' }}>
+        <IonIcon name="notifications" size={30} color="#24CCCC" />
+        <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const Speaker = () => {
+  return (
+    <TouchableOpacity>
+      <View style={styles.volumeDownContainer}>
+        <View style={styles.volumeDownIcon}>
+          <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />
+        </View>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -75,7 +138,7 @@ const styles = StyleSheet.create({
     width: 24.811594009399414,
     height: 24.803571701049805,
     top: 55,
-    left:'85%',
+    left: '85%',
     transform: [
       { translateX: 0 },
       { translateY: 0 },
@@ -178,7 +241,7 @@ const stylesDTP = StyleSheet.create({
     justifyContent: 'center', // ustawiamy wyśrodkowanie zawartości w kontenerze
     alignItems: 'center',
     marginTop: 150,
-    
+
   },
   label: {
     fontSize: 25,
@@ -201,12 +264,12 @@ const stylesDTP = StyleSheet.create({
 
 
 
-const NextButton = ({ navigation }) => {
+const NextButton = ({ navigation, onPress }) => {
   return (
-    <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
+    <TouchableOpacity onPress={onPress}>
       <View style={stylesNB.container} >
-      <Text style={stylesNB.text}>Zatwierdź</Text>
-</View>
+        <Text style={stylesNB.text}>Zatwierdź</Text>
+      </View>
     </TouchableOpacity>
   );
 }
@@ -222,21 +285,21 @@ const stylesNB = StyleSheet.create({
     borderRadius: 22.5,
     justifyContent: 'center',
     alignItems: 'center',
-    },
-    text: {
+  },
+  text: {
     color: 'black',
     fontSize: 18,
     fontFamily: 'Helvetica-Bold',
     lineHeight: 19,
     textAlign: 'center',
     paddingTop: 8,
-    },
-    });
+  },
+});
 
 
-  const DolnyPanel = () => {
-    return (
-      <View style={stylesDP.container}>
+const DolnyPanel = () => {
+  return (
+    <View style={stylesDP.container}>
       <View style={stylesDP.shadows}>
         <View style={stylesDP.shadowLayer0} />
       </View>
@@ -281,12 +344,12 @@ const stylesDP = StyleSheet.create({
     flexDirection: 'row',
   },
   //tutaj mamy styl do ikonki domku
-  iconContainer: {                
+  iconContainer: {
     backgroundColor: 'transparent',
     borderRadius: 20,
     width: 40,
     height: 40,
-    bottom :'-35%',
+    bottom: '-35%',
     left: '10%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -297,12 +360,12 @@ const stylesDP = StyleSheet.create({
   },
 });
 
-const HomeIcon = ({navigation}) => {
+const HomeIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
-    <View style={stylesDP.iconContainer}>
-      <Icon name="home" size={30} color="#fff" />
-    </View>
+      <View style={stylesDP.iconContainer}>
+        <Icon name="home" size={30} color="#fff" />
+      </View>
     </TouchableOpacity>
   );
 }
@@ -310,9 +373,9 @@ const HomeIcon = ({navigation}) => {
 const PillIcon = () => {
   return (
     <TouchableOpacity>
-    <View style={{  bottom: '65%', left:'45%' }}>
-      <MIcon name="pill" size={30} color="#24cccc" />
-    </View>
+      <View style={{ bottom: '65%', left: '45%' }}>
+        <MIcon name="pill" size={30} color="#24cccc" />
+      </View>
     </TouchableOpacity>
   );
 };
@@ -320,9 +383,9 @@ const PillIcon = () => {
 const HeadIcon = () => {
   return (
     <TouchableOpacity>
-    <View style={{  bottom: '170%', left:'80%' }}>
-      <MIcon name="head" size={30} color="#24cccc" />
-    </View>
+      <View style={{ bottom: '170%', left: '80%' }}>
+        <MIcon name="head" size={30} color="#24cccc" />
+      </View>
     </TouchableOpacity>
   );
 };

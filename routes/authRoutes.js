@@ -1,17 +1,13 @@
 const express = require("express");
 const router = express.Router();
-const mongoose = require("mongoose");
-//const UserController = require('./controller/UserController');
-const User = require("C:/Users/werka/OneDrive/Pulpit/Apka/ReminderMedApp/models/User");
-//const User = mongoose.model('User');
+const { createUser, logInUser } = require("../controller/UserController");
+const { createMed, LoadMed} = require("../controller/MedicineController")
 
-router.post('/Sign_Up_Zar_Screen',(req,res)=>{
-    res.send('rejestracja?')
-    const { login, name, password } = req.body;
-    if (!login || !name || !password) {
-        
-        return res.status(422).send({error:'fill gaps'});
-      }
 
-})
-module.exports=router;
+router.post('/Sign_Up_Zar_Screen', createUser)
+router.post('/Sign_In_Screen', logInUser )
+
+router.get('/Main_Screen',LoadMed)
+//router.post('/Main_Screen',createMed)
+// tu jeszcze jednego do zapisu lekow
+module.exports = router;
