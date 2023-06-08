@@ -13,14 +13,14 @@ import axios from 'axios';
 
 const Main_Screen = () => {
 
- 
-  const [medicineData, setMedicineData] = useState('');
+
+  const [medicineData, setMedicineData] = useState([]);
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
     fetchMedicineData();
 
-   
+
     navigation.setOptions({
       headerShown: false,
     });
@@ -30,7 +30,7 @@ const Main_Screen = () => {
     try {
       const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
       const data = response.data;
-      console.log('z metody fetchMedicineData',response.data)
+      console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
@@ -49,7 +49,7 @@ const Main_Screen = () => {
       <NotificationIcon />
       <Speaker navigation={navigation} />
       <BigText />
-      <Okienko medicineData={medicineData} /> 
+      <Okienko medicineData={medicineData} />
       <DolnyPanel />
       <CalendarIcon />
       <PlusIcon navigation={navigation} />
@@ -133,7 +133,7 @@ const BigText = () => {
 };
 
 const Okienko = ({ medicineData }) => {
-  console.log('ma wyświetlać a chuja',medicineData);
+  console.log('ma wyświetlać a chuja', medicineData);
   return (
     <View style={stylesO.container}>
       <View style={stylesO.shadows}>
@@ -142,19 +142,21 @@ const Okienko = ({ medicineData }) => {
       </View>
       <View style={stylesO.shapes}>
         <View style={stylesO.shape}>
-          {medicineData && (
+          {medicineData.length > 0 && (
             <View style={stylesO.medicineData}>
               <Text style={stylesO.medicineText}>
-                Name: {medicineData.name}
+                Name: {medicineData[0].name}
               </Text>
               <Text style={stylesO.medicineText}>
-                Dosage: {medicineData.dosage}
+                Dosage: {medicineData[0].dosage}
               </Text>
             </View>
           )}
         </View>
+
       </View>
     </View>
+
   );
 };
 
