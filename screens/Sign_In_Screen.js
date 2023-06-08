@@ -44,7 +44,7 @@ const Sign_In_Screen = () => {
           Alert.alert('Nieprawidłowe dane logowania');
         });*/
         axios
-        .post("http://192.168.0.6:8000/Sign_In_Screen", {
+        .post("http://192.168.0.53:8000/Sign_In_Screen", {
           login: loginValue,
           password: passwordValue,
         })

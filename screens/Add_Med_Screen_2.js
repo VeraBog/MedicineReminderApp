@@ -49,7 +49,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
       console.log(nazwa, typLeku, komentarz, date, time);
 
 
-      axios.post("http://192.168.0.6:8000/Add_Med_Screen_2", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
+      axios.post("http://192.168.0.53:8000/Add_Med_Screen_2", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
         nazwa: nazwaValue,                                      // było 
         typLeku: typLekuValue,
         komentarz: komentarzValue,

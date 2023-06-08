@@ -249,34 +249,21 @@ const stylesTT = StyleSheet.create({
   },
 });
 
-const WhichTypeBox = ({ itemValue, onChangeText }) => {
-  const [selectedValue, setSelectedValue] = useState();
+const WhichTypeBox = ({ value, onChangeText }) => {
+  // const [selectedValue, setSelectedValue] = useState();
   return (
     <View style={stylesTB.container}>
       <View style={stylesTB.background} />
       <View style={stylesTB.stroke} />
+      <TextInput
+        style={[stylesW.input, { width: 378, height: 65 }]}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="Type here..."
+        placeholderTextColor="white"
+      />
 
-      <View style={stylesTB.pickerContainer}>
-        <Picker
-          selectedValue={selectedValue}
-          style={stylesTB.picker}
-          //onValueChange={onChangeText}
-          onValueChange={(itemValue, itemIndex) =>
-        setSelectedValue(itemValue)
-          } 
-        >
-        <Picker.Item label="Przeciwbólowe" value="Przeciwbólowe" />
-        <Picker.Item label="Antykoncepcyjne" value="Antykoncepcyjne" />
-        <Picker.Item label="Przeciwzapalne" value="Przeciwzapalne" />
-        <Picker.Item label="Przeciwwirusowe" value="Przeciwwirusowe" />
-        <Picker.Item label="Przeciwnadciśnieniowe" value="Przeciwnadciśnieniowe" />
-        <Picker.Item label="Przeciwdepresyjne" value="Przeciwdepresyjne" />
-        <Picker.Item label="Przeciwhistaminowe" value="Przeciwhistaminowe" />
-        <Picker.Item label="Immunosupresyjne" value="Immunosupresyjne" />
-        <Picker.Item label="Inne" value="Inne" />
-      </Picker>
     </View>
-    </View >
   );
 }
 
@@ -308,20 +295,27 @@ const stylesTB = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#62F0F0',
   },
-
-  pickerContainer: {
-    position: 'absolute',
-    top: 20,
-    left: 0,
-    width: 378,
-    height: 125,
-    opacity: 1,
-  },
-  picker: {
+  input: {
     color: 'white',
-    backgroundColor: 'transparent',
-    fontWeight: 'bold',
+    backgroundColor: '#0C1F37',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: '100%',
+    height: '100%',
   },
+  /* pickerContainer: {
+     position: 'absolute',
+     top: 20,
+     left: 0,
+     width: 378,
+     height: 125,
+     opacity: 1,
+   },
+   picker: {
+     color: 'white',
+     backgroundColor: 'transparent',
+     fontWeight: 'bold',
+   },*/
 
 });
 

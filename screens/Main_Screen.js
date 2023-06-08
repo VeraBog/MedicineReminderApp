@@ -13,55 +13,29 @@ import axios from 'axios';
 
 const Main_Screen = () => {
 
-  const [medicineData, setMedicineData] = useState([]);
-
+ 
+  const [medicineData, setMedicineData] = useState('');
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
-    /*const fetchData = async () => {
-      try {
-        // const response = await axios.post('/Main_Screen');
-        const response = await axios.post("http://192.168.0.53:8000/Main_Screen", {
-          //login: loginValue,
-          //name: nameValue,
-          //password: passwordValue,
-        })
+    fetchMedicineData();
 
-        setMedicineData(response.data);
-        console.log('Pobrano dane z bazy danych:', response.data);
-        
-      } catch (error) {
-        console.error('Błąd podczas pobierania danych z bazy danych:', error);
-      }
-    };*/
-
-    const fetchData = async () => {
-      try {
-        const response = await axios.get("http://192.168.0.6:8000/Main_Screen", {});
-        console.log("Pobrano dane z bazy danych:", response.data);
-
-        // Sprawdź odpowiedź serwera w poszukiwaniu informacji o błędzie
-        if (response.data.error) {
-          throw new Error(response.data.error);
-        }
-        // Sprawdź dodatkowo status odpowiedzi serwera
-        if (response.status !== 200) {
-          throw new Error("Wystąpił błąd podczas pobierania danych");
-        }
-
-        setMedicineData(response.data);
-      } catch (error) {
-        console.error("Błąd podczas pobierania danych z bazy danych:", error);
-      }
-    };
-
-    fetchData();
+   
     navigation.setOptions({
       headerShown: false,
     });
-  }, []); // tu się w sumie usuwa nagłowek
+  }, []); // tu się w sumie usuwa nagłowek  
 
-
+  const fetchMedicineData = async () => {
+    try {
+      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
+      const data = response.data;
+      console.log('z metody fetchMedicineData',response.data)
+      setMedicineData(data);
+    } catch (error) {
+      console.error('Błąd podczas pobierania danych:', error);
+    }
+  };
 
   return (
     <View
@@ -70,12 +44,12 @@ const Main_Screen = () => {
         height: 926,
         backgroundColor: '#0C1320',
         borderRadius: 34,
-        //backgroundColor: 'rgba(12, 35, 64, 1)',
+        //backgroundColor: 'rgba(12, 35, 64, 1)',  // w okienko jeszcze medicineData={medicineData}
       }}>
       <NotificationIcon />
       <Speaker navigation={navigation} />
       <BigText />
-      <Okienko medicineData={medicineData} />
+      <Okienko medicineData={medicineData} /> 
       <DolnyPanel />
       <CalendarIcon />
       <PlusIcon navigation={navigation} />
@@ -159,55 +133,29 @@ const BigText = () => {
 };
 
 const Okienko = ({ medicineData }) => {
-
-
-  /* <View style={stylesO.container}>
-     <View style={stylesO.shadows}>
-       <View style={stylesO.shadow0} />
-       <View style={stylesO.shadow1} />
-     </View>
-     <View style={stylesO.shapes}>
-       <View style={stylesO.shape} />
-       <View style={stylesO.medicineDataContainer}>
-         {medicineData.map((medicine, index) => (
-           <Text key={index} style={stylesO.medicineDataText}>
-             {medicine.name} - {medicine.dosage}
-           </Text>
-         ))}
-       </View>
-     </View>
-   </View> */
-
-  <View style={stylesO.container}>
-    <View style={stylesO.shadows}>
-      <View style={stylesO.shadow0} />
-      <View style={stylesO.shadow1} />
-    </View>
-    <View style={stylesO.shapes}>
-      <View style={stylesO.shape} />
-      
-     
-    </View>
-  </View>
-
-  const renderMedicineData = () => {
-    if (medicineData.length === 0) {
-      return <Text>Brak danych o lekach</Text>;
-    }
-
-    return medicineData.map((medicine, index) => (
-      <View key={index}>
-        <Text>Nazwa: {medicine.name}</Text>
-        <Text>Dawkowanie: {medicine.dosage}</Text>
-        <Text>Producent: {medicine.manufacturer}</Text>
-        <Text>Rodzaj leku: {medicine.typeMed}</Text>
-        <Text>Data: {medicine.date}</Text>
-        <Text>Godzina: {medicine.time}</Text>
-        <Text>Komentarz: {medicine.comment}</Text>
+  console.log('ma wyświetlać a chuja',medicineData);
+  return (
+    <View style={stylesO.container}>
+      <View style={stylesO.shadows}>
+        <View style={stylesO.shadow0} />
+        <View style={stylesO.shadow1} />
       </View>
-    ));
-  };
-
+      <View style={stylesO.shapes}>
+        <View style={stylesO.shape}>
+          {medicineData && (
+            <View style={stylesO.medicineData}>
+              <Text style={stylesO.medicineText}>
+                Name: {medicineData.name}
+              </Text>
+              <Text style={stylesO.medicineText}>
+                Dosage: {medicineData.dosage}
+              </Text>
+            </View>
+          )}
+        </View>
+      </View>
+    </View>
+  );
 };
 
 const stylesO = StyleSheet.create({
@@ -270,14 +218,17 @@ const stylesO = StyleSheet.create({
     height: '100%',
     backgroundColor: '#0C141F',
   },
-  /* medicineDataContainer: {
-     marginTop: 20,
-     marginLeft: 20,
-   },
-   medicineDataText: {
-     fontSize: 16,
-     marginBottom: 10,
-   },*/
+  medicineData: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  medicineText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
 });
 
 const DolnyPanel = () => {
