@@ -24,7 +24,7 @@ const MedList_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.5:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);

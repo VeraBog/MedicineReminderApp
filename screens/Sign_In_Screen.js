@@ -26,25 +26,8 @@ const Sign_In_Screen = () => {
       if (!loginValue || !passwordValue) {
         throw new Error('Wprowadź login i hasło');
       }
-
-      //  console.log(login, password);
-
-
-    /*  axios.post("http://192.168.0.53:8000/Sign_In_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
-        login: loginValue,                                      // było http://192.168.0.6:8000
-        password: passwordValue,
-      })
-        .then((response) => {
-          console.log("RESP", response.data);
-          //  Alert.alert('Dodano użytkownika'); // w sumie to nie wiem czemu nie ma komunikatu
-          navigation.navigate('Main_Screen');
-        })
-        .catch((err) => {
-          console.log("ERR", err);
-          Alert.alert('Nieprawidłowe dane logowania');
-        });*/
-        axios
-        .post("http://192.168.0.5:8000/Sign_In_Screen", {
+      axios
+        .post("http://192.168.0.53:8000/Sign_In_Screen", {
           login: loginValue,
           password: passwordValue,
         })
@@ -59,13 +42,14 @@ const Sign_In_Screen = () => {
             throw new Error("Wystąpił błąd podczas logowania");
           }
           // Alert.alert('Dodano użytkownika');
-          navigation.navigate('Main_Screen');
+          // Przekazanie wartości loginu do ekranu Main_Screen
+          navigation.navigate('Main_Screen', { login: loginValue });
         })
         .catch((err) => {
           console.log("ERR", err);
           Alert.alert(error.message);;
         });
-      
+
     } catch (error) {
       console.error(error);
       Alert.alert('Wystąpił błąd');
@@ -287,17 +271,6 @@ const styl = StyleSheet.create({
   },
 });
 
-/*const Sign_in_btn = ({ navigation, onPress }) => {
-  const onPressSignIn = async () => {
-    console.log("Trying sign in with user: " + email);
-    try {
-      await signIn(email, password);
-    } catch (error) {
-      const errorMessage = `Failed to sign in: ${error.message}`;
-      console.error(errorMessage);
-      Alert.alert(errorMessage);
-    }
-  };*/
 const Sign_in_btn = ({ onPress }) => {
   const handlePress = () => {
     onPress(); // Wywołaj funkcję onPress
@@ -377,7 +350,5 @@ const stylesB = StyleSheet.create({
     fontSize: 18,
   },
 });
-
-
 
 export default Sign_In_Screen

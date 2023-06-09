@@ -1,6 +1,6 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { AntDesign } from '@expo/vector-icons'; // to do ikonki  głośnika
 import Icon from 'react-native-vector-icons/FontAwesome'; // to do kalendarza i w sumie do domku
@@ -17,11 +17,12 @@ const Main_Screen = () => {
   const [medicineData, setMedicineData] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
   const navigation = useNavigation();
+  const [login, setUsername] = useState('');
 
   useLayoutEffect(() => {
     fetchMedicineData();
     handleRefresh();
-
+    //  fetchUsername();
     navigation.setOptions({
       headerShown: false,
     });
@@ -29,20 +30,34 @@ const Main_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.5:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
+
+
+
   };
+  /*  const fetchUsername = async () => {
+      try {
+        const response = await axios.get('http://192.168.0.5:8000/Main_Screen');
+        const  login  = response.data; // Zakładam, że odpowiedź API zawiera obiekt z polem "username"
+        setUsername(login);
+      } catch (error) {
+        console.error('Błąd podczas pobierania username:', error);
+      }
+    }; */
 
   const handleRefresh = async () => {
     setRefreshing(true);
     await fetchMedicineData();
     setRefreshing(false);
+    Alert.alert("Odświeżono listę leków.")
   };
+  
   const handleNotificationDismiss = () => {
     setShowNotification(false);
   };
@@ -54,14 +69,14 @@ const Main_Screen = () => {
         height: 926,
         backgroundColor: '#0C1320',
         borderRadius: 34,
-        //backgroundColor: 'rgba(12, 35, 64, 1)',  // w okienko jeszcze medicineData={medicineData}
+        //backgroundColor: 'rgba(12, 35, 64, 1)',  // w okienko jeszcze <BigText  login={login} />
       }}>
       <NotificationIcon />
       <Speaker navigation={navigation} />
       <BigText />
       <Okienko medicineData={medicineData} />
       <DolnyPanel />
-      <RefreshIcon onPress = {handleRefresh} />
+      <RefreshIcon handleRefresh={handleRefresh} refreshing={refreshing} />
       <PlusIcon navigation={navigation} />
       <HomeIcon />
       <PillIcon navigation={navigation} />
@@ -134,16 +149,31 @@ const styles = StyleSheet.create({
   },
 });
 
-const BigText = () => {
+/*const BigText = ({login}) => {
   return (
     <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'absolute', bottom: '70%', left: 0, right: 0 }}>
-      <Text style={{ color: '#fff', fontSize: 48, fontFamily: 'Helvetica-Bold', lineHeight: 56, textAlign: 'left' }}>Witaj {"\n"} Weronika</Text>
+      <Text style={{ color: '#fff', fontSize: 48, fontFamily: 'Helvetica-Bold', lineHeight: 56, textAlign: 'left' }}>
+        {`Witaj\n${login}`}
+      </Text>
+    </Animatable.View>
+  );
+};*/
+const BigText = () => {
+  //const route = useRoute();
+  //const { login } = route.params;
+  
+  return (
+    <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'absolute', bottom: '72%', left: 10, right: 0 }}>
+      <Text style={{ color: '#fff', fontSize: 58, fontFamily: 'Helvetica-Bold', lineHeight: 56, textAlign: 'left' }}>
+        {`Witaj Wera`}
+      </Text>
     </Animatable.View>
   );
 };
 
+
 const Okienko = ({ medicineData }) => {
-  console.log('ma wyświetlać a chuja', medicineData);
+  console.log('ma wyświetlać', medicineData);
   return (
     <View style={stylesO.container}>
       <View style={stylesO.shadows}>
@@ -312,13 +342,13 @@ const stylesDP = StyleSheet.create({
   },
 });
 
-const RefreshIcon = ({handleRefresh}) => {
+const RefreshIcon = ({ handleRefresh }) => {
   return (
     <TouchableOpacity onPress={handleRefresh}>
-    <View style={{ position: 'absolute', bottom: -660, left: '10%' }}>
-      <Icon name="refresh" size={30} color="#24cccc" />
-    </View>
-  </TouchableOpacity>
+      <View style={{ position: 'absolute', bottom: -660, left: '10%' }}>
+        <Icon name="refresh" size={30} color="#24cccc" />
+      </View>
+    </TouchableOpacity>
   );
 }
 

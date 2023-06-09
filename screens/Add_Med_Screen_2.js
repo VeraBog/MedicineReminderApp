@@ -64,7 +64,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
       };
 
 
-      axios.post("http://192.168.0.5:8000/Add_Med_Screen_2", data)
+      axios.post("http://192.168.0.53:8000/Add_Med_Screen_2", data)
         .then((response) => {
           console.log("RESP", response);
           Alert.alert('Dodano Leki');

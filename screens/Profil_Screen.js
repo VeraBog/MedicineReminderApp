@@ -117,22 +117,25 @@ const NextButton = ({ navigation }) => {
 const stylesNB = StyleSheet.create({
   container: {
     backgroundColor: '#24CCCC',
-    width: 129,
-    height: 45,
+    width: 200,
+    height: 80,
     position: 'absolute',
-    top: 671,
-    left: 149,
-    borderRadius: 22.5,
+    top: 600,
+    left: 120,
+    borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
   text: {
     color: 'black',
-    fontSize: 18,
+    fontSize: 22,
     fontFamily: 'Helvetica-Bold',
     lineHeight: 19,
     textAlign: 'center',
     paddingTop: 8,
+    paddingBottom: 8,
+    paddingLeft: 15,
+    paddingRight: 15,
   },
 });
 
