@@ -8,6 +8,6 @@ router.post('/Sign_Up_Zar_Screen', createUser)
 router.post('/Sign_In_Screen', logInUser)
 
 router.get('/Main_Screen', LoadMed)
-//router.post('/Main_Screen',createMed)
+router.post('/Add_Med_Screen_2',createMed)
 // tu jeszcze jednego do zapisu lekow
 module.exports = router;

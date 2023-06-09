@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const medicineSchema = new Schema({
     // Definicja schematu kolekcji
-    name: { type: String, required: true },
-    dosage: { type: Number, required: true },
+    name: { type: String },
+    dosage: { type: Number },
     manufacturer: { type: String },
     typeMed: {type: String},
-    date: { type: Date, required: true },
-    time: { type: String, required: true },
+    date: { type: Date },
+    time: { type: String },
     comment: {type: String},
     // inne pola i ich typy
     // ...

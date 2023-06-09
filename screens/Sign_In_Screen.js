@@ -44,7 +44,7 @@ const Sign_In_Screen = () => {
           Alert.alert('Nieprawidłowe dane logowania');
         });*/
         axios
-        .post("http://192.168.0.53:8000/Sign_In_Screen", {
+        .post("http://192.168.0.5:8000/Sign_In_Screen", {
           login: loginValue,
           password: passwordValue,
         })
@@ -181,7 +181,7 @@ const BoxL = ({ value, onChangeText }) => {
     <View style={styles.container}>
       <View style={styles.shadows}>
         <View style={styles.shapes}>
-          <Text style={styles.text}>Login</Text>
+          <Text style={styles.text}></Text>
           <TextInput
             style={styles.textInput}
             placeholder="Login"
@@ -328,6 +328,7 @@ const stylesB = StyleSheet.create({
   view: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     backgroundColor: 'white',
     position: 'absolute',
     left: 87,
@@ -336,6 +337,7 @@ const stylesB = StyleSheet.create({
   shadows: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     overflow: 'visible',
     position: 'absolute',
     zIndex: -1,
@@ -343,7 +345,7 @@ const stylesB = StyleSheet.create({
   shadowLayer: {
     width: '100%',
     height: '100%',
-    borderRadius: 0,
+    borderRadius: 25,
     shadowColor: 'rgba(0,0,0,0.25)',
     shadowOpacity: 1,
     shadowRadius: 4,
@@ -355,6 +357,7 @@ const stylesB = StyleSheet.create({
   shapes: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     overflow: 'hidden',
     position: 'absolute',
     zIndex: 1,
@@ -362,6 +365,7 @@ const stylesB = StyleSheet.create({
   shapeLayer: {
     width: '100%',
     height: '100%',
+    borderRadius: 25,
     backgroundColor: 'rgb(36, 204, 182)',
     justifyContent: 'center',
     alignItems: 'center',

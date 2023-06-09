@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, TextInput, Alert } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
@@ -16,7 +16,8 @@ const Add_Med_Screen_1 = () => {
   const [nazwa, setNazwa] = useState('')
   const [typLeku, setTypLeku] = useState('');
   const [komentarz, setKomentarz] = useState('');
-
+  const [producent, setManufacturer] = useState('');
+  const [dosage, setDosage] = useState('');
 
   const handleNazwaLekuChange = (value) => {
     setNazwa(value);
@@ -30,11 +31,22 @@ const Add_Med_Screen_1 = () => {
     setKomentarz(value);
   };
 
+
+
+  const handleProducentChange = (value) => {
+    setManufacturer(value);
+  };
+  const handleDosageChange = (value) => {
+    setDosage(value);
+  };
+
   const handleNext = () => {
     navigation.navigate('Add_Med_Screen_2', {
       nazwa,
       typLeku,
       komentarz,
+      producent,
+      dosage,
     });
   };
 
@@ -44,32 +56,57 @@ const Add_Med_Screen_1 = () => {
     });
   }, []); // tu się w sumie usuwa nagłowek
   return (
-    <View
-      style={{
-        width: 428,
-        height: 926,
-        backgroundColor: '#0C1320',
-        borderRadius: 34,
-        //backgroundColor: 'rgba(12, 35, 64, 1)',
-      }}>
+    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+      <ScrollView contentContainerStyle={stylesK.container}>
+        <View
+          style={{
+            width: 428,
+            height: 926,
+            backgroundColor: '#0C1320',
+            borderRadius: 34,
+            //backgroundColor: 'rgba(12, 35, 64, 1)',
+          }}>
 
-      <NotificationIcon />
-      <Speaker />
-      <AddText />
-      <WhichMedText />
-      <WhichMedBox value={nazwa} onChangeText={handleNazwaLekuChange} />
-      <WhichTypeText />
-      <WhichTypeBox value={typLeku} onChangeText={handleTypLekuChange} />
-      <CommentText />
-      <CommentBox value={komentarz} onChangeText={handleKomentarzChange} />
-      <NextButton navigation={navigation} onPress={handleNext} />
-      <DolnyPanel />
-      <HomeIcon navigation={navigation} />
-      <PillIcon />
-      <HeadIcon />
-    </View>
+          <NotificationIcon />
+          <Speaker />
+          <AddText />
+          <WhichMedText />
+          <WhichMedBox value={nazwa} onChangeText={handleNazwaLekuChange} />
+          <WhichTypeText />
+          <WhichTypeBox value={typLeku} onChangeText={handleTypLekuChange} />
+          <DoseText />
+          <DoseBox value={dosage} onChangeText={handleDosageChange} />
+          <ManufacturerText />
+          <ManufacturerBox value={producent} onChangeText={handleProducentChange} />
+          <CommentText />
+          <CommentBox value={komentarz} onChangeText={handleKomentarzChange} />
+          <NextButton navigation={navigation} onPress={handleNext} />
+          <DolnyPanel />
+          <HomeIcon navigation={navigation} />
+          <PillIcon />
+          <HeadIcon />
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
+
+const stylesK = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    backgroundColor: '#24cccc',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 50,
+    paddingBottom: 16,
+  },
+  content: {
+    width: 428,
+    height: 926,
+    borderRadius: 34,
+  },
+  // Reszta styli
+});
 
 const NotificationIcon = () => {
   return (
@@ -149,7 +186,7 @@ const stylesT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '20%',
+    top: '16%',
     left: '15%',
   },
   text: {
@@ -192,7 +229,7 @@ const stylesW = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '25%',
+    top: '21%',
     left: '5%',
   },
   background: {
@@ -237,7 +274,7 @@ const stylesTT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '35%',
+    top: '30%',
     left: '15%',
   },
   text: {
@@ -256,10 +293,10 @@ const WhichTypeBox = ({ value, onChangeText }) => {
       <View style={stylesTB.background} />
       <View style={stylesTB.stroke} />
       <TextInput
-        style={[stylesW.input, { width: 378, height: 65 }]}
+        style={[stylesTB.input, { width: 378, height: 65 }]}
         value={value}
         onChangeText={onChangeText}
-        placeholder="Type here..."
+        placeholder="Wpisz tutaj..."
         placeholderTextColor="white"
       />
 
@@ -277,7 +314,7 @@ const stylesTB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '40%',
+    top: '35%',
     left: '5%',
 
   },
@@ -319,6 +356,183 @@ const stylesTB = StyleSheet.create({
 
 });
 
+const DoseText = () => {
+  return (
+    <View style={stylesDT.container}>
+      <Text style={stylesDT.text}>
+        Dawka(mg)
+      </Text>
+    </View>
+  );
+}
+
+const stylesDT = StyleSheet.create({
+  container: {
+    backgroundColor: '#0C1320',
+    width: 299,
+    height: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: '44%',
+    left: '15%',
+  },
+  text: {
+    color: '#fff',
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 24,
+    lineHeight: 28,
+    textAlign: 'center',
+  },
+});
+
+const DoseBox = ({ value, onChangeText }) => {
+  // const [selectedValue, setSelectedValue] = useState();
+  return (
+    <View style={stylesDB.container}>
+      <View style={stylesDB.background} />
+      <View style={stylesDB.stroke} />
+      <TextInput
+        style={[stylesDB.input, { width: 378, height: 65 }]}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="Wpisz tutaj..."
+        placeholderTextColor="white"
+      />
+
+    </View>
+  );
+}
+
+const stylesDB = StyleSheet.create({
+  container: {
+    backgroundColor: '#0C1F37',
+    width: 378,
+    height: 63,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: '#62F0F0',
+    overflow: 'hidden',
+    position: 'absolute',
+    top: '49%',
+    left: '5%',
+
+  },
+  background: {
+    backgroundColor: '#0C1F37',
+    flex: 1,
+  },
+  stroke: {
+    position: 'absolute',
+    top: -1,
+    left: -1,
+    right: -1,
+    bottom: -1,
+    borderRadius: 26,
+    borderWidth: 2,
+    borderColor: '#62F0F0',
+  },
+  input: {
+    color: 'white',
+    backgroundColor: '#0C1F37',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: '100%',
+    height: '100%',
+  },
+
+
+});
+
+const ManufacturerText = () => {
+  return (
+    <View style={stylesMT.container}>
+      <Text style={stylesMT.text}>
+        Producent
+      </Text>
+    </View>
+  );
+}
+
+const stylesMT = StyleSheet.create({
+  container: {
+    backgroundColor: '#0C1320',
+    width: 299,
+    height: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    top: '57%',
+    left: '15%',
+  },
+  text: {
+    color: '#fff',
+    fontFamily: 'Helvetica-Bold',
+    fontSize: 24,
+    lineHeight: 28,
+    textAlign: 'center',
+  },
+});
+
+const ManufacturerBox = ({ value, onChangeText }) => {
+  // const [selectedValue, setSelectedValue] = useState();
+  return (
+    <View style={stylesMB.container}>
+      <View style={stylesMB.background} />
+      <View style={stylesMB.stroke} />
+      <TextInput
+        style={[stylesMB.input, { width: 378, height: 65 }]}
+        value={value}
+        onChangeText={onChangeText}
+        placeholder="Wpisz tutaj..."
+        placeholderTextColor="white"
+      />
+
+    </View>
+  );
+}
+
+const stylesMB = StyleSheet.create({
+  container: {
+    backgroundColor: '#0C1F37',
+    width: 378,
+    height: 63,
+    borderRadius: 25,
+    borderWidth: 2,
+    borderColor: '#62F0F0',
+    overflow: 'hidden',
+    position: 'absolute',
+    top: '61%',
+    left: '5%',
+
+  },
+  background: {
+    backgroundColor: '#0C1F37',
+    flex: 1,
+  },
+  stroke: {
+    position: 'absolute',
+    top: -1,
+    left: -1,
+    right: -1,
+    bottom: -1,
+    borderRadius: 26,
+    borderWidth: 2,
+    borderColor: '#62F0F0',
+  },
+  input: {
+    color: 'white',
+    backgroundColor: '#0C1F37',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    width: '100%',
+    height: '100%',
+  },
+
+
+});
+
+
 const CommentText = () => {
   return (
     <View style={stylesCT.container}>
@@ -337,7 +551,7 @@ const stylesCT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '50%',
+    top: '69%',
     left: '15%',
   },
   text: {
@@ -375,7 +589,7 @@ const stylesCB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '55%',
+    top: '73%',
     left: '5%',
   },
   background: {
@@ -420,7 +634,7 @@ const stylesNB = StyleSheet.create({
     width: 129,
     height: 45,
     position: 'absolute',
-    top: 671,
+    top: 710,
     left: 149,
     borderRadius: 22.5,
     justifyContent: 'center',

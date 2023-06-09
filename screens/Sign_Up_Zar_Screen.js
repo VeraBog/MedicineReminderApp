@@ -50,7 +50,7 @@ const Sign_Up_Zar_Screen = () => {
 
       //await createUser(loginValue, nameValue, passwordValue);
 
-      axios.post("http://192.168.0.53:8000/Sign_Up_Zar_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
+      axios.post("http://192.168.0.5:8000/Sign_Up_Zar_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
           login: loginValue,                                      // było 
           name: nameValue,
           password: passwordValue,

@@ -13,13 +13,14 @@ import axios from 'axios';
 
 const Main_Screen = () => {
 
-
+  const [refreshing, setRefreshing] = useState(false);
   const [medicineData, setMedicineData] = useState([]);
+  const [showNotification, setShowNotification] = useState(false);
   const navigation = useNavigation();
 
   useLayoutEffect(() => {
     fetchMedicineData();
-
+    handleRefresh();
 
     navigation.setOptions({
       headerShown: false,
@@ -28,13 +29,22 @@ const Main_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.5:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
     } catch (error) {
       console.error('Błąd podczas pobierania danych:', error);
     }
+  };
+
+  const handleRefresh = async () => {
+    setRefreshing(true);
+    await fetchMedicineData();
+    setRefreshing(false);
+  };
+  const handleNotificationDismiss = () => {
+    setShowNotification(false);
   };
 
   return (
@@ -51,7 +61,7 @@ const Main_Screen = () => {
       <BigText />
       <Okienko medicineData={medicineData} />
       <DolnyPanel />
-      <CalendarIcon />
+      <RefreshIcon onPress = {handleRefresh} />
       <PlusIcon navigation={navigation} />
       <HomeIcon />
       <PillIcon navigation={navigation} />
@@ -141,31 +151,30 @@ const Okienko = ({ medicineData }) => {
         <View style={stylesO.shadow1} />
       </View>
       <View style={stylesO.shapes}>
-        <View style={stylesO.shape}>
-          {medicineData.length > 0 && (
-            <View style={stylesO.medicineData}>
+        <Text style={stylesO.title}>Twoje leki</Text>
+        <ScrollView contentContainerStyle={stylesO.scrollContainer}>
+          {medicineData.map((medicine, index) => (
+            <View key={index} style={stylesO.medicineData}>
               <Text style={stylesO.medicineText}>
-                Name: {medicineData[0].name}
+                Name: {medicine.name}
               </Text>
               <Text style={stylesO.medicineText}>
-                Dosage: {medicineData[0].dosage}
+                Dosage: {medicine.dosage}
               </Text>
             </View>
-          )}
-        </View>
-
+          ))}
+        </ScrollView>
       </View>
     </View>
-
   );
 };
 
 const stylesO = StyleSheet.create({
   container: {
     width: 376,
-    height: 136,
+    height: 426,
     backgroundColor: '#FFFFFF',
-    borderRadius: 25,
+    borderRadius: 35,
     position: 'absolute',
     left: 19,
     top: 300,
@@ -173,7 +182,7 @@ const stylesO = StyleSheet.create({
   shadows: {
     position: 'absolute',
     width: 376,
-    height: 136,
+    height: 426,
     zIndex: -1,
   },
   shadow0: {
@@ -210,26 +219,33 @@ const stylesO = StyleSheet.create({
   },
   shapes: {
     width: 376,
-    height: 136,
+    height: 426,
     borderRadius: 25,
     overflow: 'hidden',
     position: 'absolute',
-  },
-  shape: {
-    width: '100%',
-    height: '100%',
     backgroundColor: '#0C141F',
+    borderWidth: 0.2,
+    borderColor: '#FFFFFF',
+  },
+  title: {
+    color: '#24cccc',
+    fontSize: 30,
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    marginTop: 10,
+  },
+  scrollContainer: {
+    flexGrow: 1,
   },
   medicineData: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 10,
   },
   medicineText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 26,
     fontWeight: 'bold',
-    marginBottom: 10,
   },
 });
 
@@ -296,13 +312,13 @@ const stylesDP = StyleSheet.create({
   },
 });
 
-const CalendarIcon = () => {
+const RefreshIcon = ({handleRefresh}) => {
   return (
-    <TouchableOpacity>
-      <View style={{ position: 'absolute', bottom: -660, left: '10%' }}>
-        <Icon name="calendar" size={30} color="#24cccc" />
-      </View>
-    </TouchableOpacity>
+    <TouchableOpacity onPress={handleRefresh}>
+    <View style={{ position: 'absolute', bottom: -660, left: '10%' }}>
+      <Icon name="refresh" size={30} color="#24cccc" />
+    </View>
+  </TouchableOpacity>
   );
 }
 
