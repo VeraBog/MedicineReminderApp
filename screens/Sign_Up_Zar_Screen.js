@@ -50,14 +50,14 @@ const Sign_Up_Zar_Screen = () => {
 
       //await createUser(loginValue, nameValue, passwordValue);
 
-      axios.post("http://192.168.0.53:8000/Sign_Up_Zar_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
+      axios.post("http://192.168.0.6:8000/Sign_Up_Zar_Screen", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
           login: loginValue,                                      // było 
           name: nameValue,
           password: passwordValue,
         })
         .then((response) => {
           console.log("RESP");
-          Alert.alert('Dodano użytkownika'); // w sumie to nie wiem czemu nie ma komunikatu
+           // w sumie to nie wiem czemu nie ma komunikatu
         })
         .catch((err) => console.log("ERR",err));
 
@@ -75,6 +75,7 @@ const Sign_Up_Zar_Screen = () => {
 
 
       // Przejdź do ekranu logowania lub innego ekranu docelowego
+      Alert.alert('Dodano użytkownika');
       navigation.navigate('Welcome_Screen');
     } catch (error) {
       console.error(error);
@@ -388,7 +389,7 @@ const styl = StyleSheet.create({
 const Sign_up_btn = ({ navigation, onPress }) => {
   const handlePress = () => {
     onPress(); // Wywołaj funkcję onPress
-    navigation.navigate("Welcome_Screen"); // Przejdź do ekranu "Main_Screen"
+    //navigation.navigate("Welcome_Screen"); // Przejdź do ekranu "Main_Screen"
   };
 
   return (

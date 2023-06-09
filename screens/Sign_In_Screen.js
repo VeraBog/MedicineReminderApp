@@ -1,15 +1,21 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useContext } from 'react';
 import { StyleSheet, Text, View, Image, SafeAreaView, TouchableOpacity, TextInput, Alert, ScrollView, KeyboardAvoidingView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { logInUser } from '../controller/UserController';
 import axios from 'axios';
+// Importujemy AuthContext
+import { AuthContext } from '../context/AuthContext';
 
 const Sign_In_Screen = () => {
 
   const navigation = useNavigation();
   const [login, setLogin] = useState('');
   const [password, setPassword] = useState('');
+
+
+  const authContext = useContext(AuthContext);
+
   const handleLoginChange = (value) => {
     setLogin(value);
   };
@@ -27,7 +33,7 @@ const Sign_In_Screen = () => {
         throw new Error('Wprowadź login i hasło');
       }
       axios
-        .post("http://192.168.0.53:8000/Sign_In_Screen", {
+        .post("http://192.168.0.6:8000/Sign_In_Screen", {
           login: loginValue,
           password: passwordValue,
         })
@@ -41,13 +47,15 @@ const Sign_In_Screen = () => {
           if (response.status !== 200) {
             throw new Error("Wystąpił błąd podczas logowania");
           }
+          const userData = { username: loginValue };
+          authContext.login(userData);
           // Alert.alert('Dodano użytkownika');
           // Przekazanie wartości loginu do ekranu Main_Screen
-          navigation.navigate('Main_Screen', { login: loginValue });
+          navigation.navigate('Main_Screen');
         })
-        .catch((err) => {
-          console.log("ERR", err);
-          Alert.alert(error.message);;
+        .catch((error) => {
+          console.log("ERR", error);
+          Alert.alert('Błąd logowania', 'Wprowadzono złe hasło.');
         });
 
     } catch (error) {

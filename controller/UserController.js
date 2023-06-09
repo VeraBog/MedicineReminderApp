@@ -26,7 +26,19 @@ const createUser = async (req, res) => {
   }
 };
 
-const logInUser = async (req, res) => {
+/*// Sprawdza dostępność loginu
+const checkUsernameAvailability = async (login) => {
+  try {
+    const response = await axios.get(`http://192.168.0.6:8000/checkUsernameAvailability?login=${login}`);
+    return response.data.available.login;
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
+
+/*const logInUser = async (req, res) => {
   try {
     console.log(req.body);
     const user = await User.findOne({ $and: [{ login: req.body.login }, { password: req.body.password }] }).exec();
@@ -42,7 +54,7 @@ const logInUser = async (req, res) => {
    
   } catch (error) {
     console.log(error)
-  }*/
+  }////////////////
   if (user) {
     console.log('Logowanie udane');
     res.status(200).json({ success: true }); // Zwróć sukces logowania
@@ -54,10 +66,33 @@ const logInUser = async (req, res) => {
   console.log(error);
   res.status(500).json({ error: 'Wystąpił błąd podczas logowania' }); // Zwróć ogólny błąd
 }
-}
+}*/
 
+const logInUser = async (req, res) => {
+  try {
+    console.log(req.body);
+    const { login, password } = req.body;
+    const user = await User.findOne({ login }).exec();
 
-module.exports = { createUser,logInUser };
+    if (user) {
+      if (user.password === password) {
+        console.log('Logowanie udane');
+        return res.status(200).json({ success: true }); // Zwróć sukces logowania
+      } else {
+        console.log('Nieprawidłowe hasło');
+        return res.status(401).json({ error: 'Nieprawidłowe hasło' }); // Zwróć błąd logowania (401 Unauthorized)
+      }
+    } else {
+      console.log('Nieprawidłowy login');
+      return res.status(404).json({ error: 'Nieprawidłowy login' }); // Zwróć błąd logowania (404 Not Found)
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: 'Wystąpił błąd podczas logowania' }); // Zwróć ogólny błąd
+  }
+};
+
+module.exports = { createUser, logInUser };
 
 
 

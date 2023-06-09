@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState, useContext } from 'react';
 import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
@@ -7,12 +7,13 @@ import Icon from 'react-native-vector-icons/FontAwesome'; // to do kalendarza i 
 import IonIcon from 'react-native-vector-icons/Ionicons'; // do tabletki
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LoadMed } from '../controller/MedicineController'; // Importuj funkcję LoadMed z kontrolera
+import { AuthContext } from '../context/AuthContext';
 
 import axios from 'axios';
 
 
 const Main_Screen = () => {
-
+  const { user } = useContext(AuthContext);
   const [refreshing, setRefreshing] = useState(false);
   const [medicineData, setMedicineData] = useState([]);
   const [showNotification, setShowNotification] = useState(false);
@@ -30,7 +31,7 @@ const Main_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.6:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
@@ -73,7 +74,7 @@ const Main_Screen = () => {
       }}>
       <NotificationIcon />
       <Speaker navigation={navigation} />
-      <BigText />
+      <BigText user={user.username}/>
       <Okienko medicineData={medicineData} />
       <DolnyPanel />
       <RefreshIcon handleRefresh={handleRefresh} refreshing={refreshing} />
@@ -97,16 +98,6 @@ const NotificationIcon = () => {
     </TouchableOpacity>
   );
 };
-/*
-  const SidePanel = () => {
-    return (
-      <View style={{ width: 28.95, height: 32.15, top:'10%',left:'3%', backgroundColor: '#2AC1BC', justifyContent: 'center', alignItems: 'center' }}>
-      <View style={{ width: '80%', height: 2, backgroundColor: '#FFFFFF', marginBottom: 4 }} />
-      <View style={{ width: '70%', height: 2, backgroundColor: '#FFFFFF', marginBottom: 4 }} />
-      <View style={{ width: '60%', height: 2, backgroundColor: '#FFFFFF' }} />
-    </View>
-    );
-  }; */
 
 const Speaker = ({ navigation }) => {
   return (
@@ -158,14 +149,14 @@ const styles = StyleSheet.create({
     </Animatable.View>
   );
 };*/
-const BigText = () => {
+const BigText = ({user}) => {
   //const route = useRoute();
   //const { login } = route.params;
   
   return (
     <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'absolute', bottom: '72%', left: 10, right: 0 }}>
       <Text style={{ color: '#fff', fontSize: 58, fontFamily: 'Helvetica-Bold', lineHeight: 56, textAlign: 'left' }}>
-        {`Witaj Wera`}
+        {`Witaj \n  ${user} `}
       </Text>
     </Animatable.View>
   );
@@ -372,14 +363,6 @@ const HomeIcon = () => {
     </TouchableOpacity>
   );
 }
-
-/* const PillsIcon = () => {
-  return (
-    <View style={styles.iconContainer}>
-      <IonIcon name="medkit" size={30} color="#fff" />
-    </View>
-  );
-}; */
 
 const PillIcon = ({ navigation }) => {
   return (
