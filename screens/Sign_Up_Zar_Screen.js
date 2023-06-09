@@ -172,7 +172,7 @@ const FrameComponent = () => {
         <Animatable.Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={require('../assets/pill_icon.jpg')}
+          source={require('../assets/pill.png')}
           style={{ width: 100, height: 100 }}
         />
       </View>
@@ -199,7 +199,7 @@ const BoxL = ({ value, onChangeText }) => {
     <View style={styles.container}>
       <View style={styles.shadows}>
         <View style={styles.shapes}>
-          <Text style={styles.text}>Login</Text>
+          <Text style={styles.text}></Text>
           <TextInput
             style={styles.textInput}
             placeholder="Login"
@@ -258,7 +258,7 @@ const BoxN = ({ value, onChangeText }) => {
     <View style={stylesN.container}>
       <View style={stylesN.shadows}>
         <View style={stylesN.shapes}>
-          <Text style={stylesN.text}>Imię</Text>
+          <Text style={stylesN.text}></Text>
           <TextInput
             style={styles.textInput}
             placeholder="Imię"
@@ -317,7 +317,7 @@ const BoxH = ({ value, onChangeText }) => {
     <View style={styl.container}>
       <View style={styl.shadows}>
         <View style={styl.shapes}>
-          <Text style={styl.text}>Hasło</Text>
+          <Text style={styl.text}></Text>
           <TextInput
             style={styles.textInput}
             placeholder="Hasło"
@@ -412,6 +412,7 @@ const stylesB = StyleSheet.create({
   view: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     backgroundColor: 'white',
     position: 'absolute',
     left: 87,
@@ -420,6 +421,7 @@ const stylesB = StyleSheet.create({
   shadows: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     overflow: 'visible',
     position: 'absolute',
     zIndex: -1,
@@ -427,10 +429,10 @@ const stylesB = StyleSheet.create({
   shadowLayer: {
     width: '100%',
     height: '100%',
-    borderRadius: 0,
+    borderRadius: 25,
     shadowColor: 'rgba(0,0,0,0.25)',
     shadowOpacity: 1,
-    shadowRadius: 4,
+    shadowRadius: 25,
     shadowOffset: {
       width: 0,
       height: 4,
@@ -439,6 +441,7 @@ const stylesB = StyleSheet.create({
   shapes: {
     width: 250,
     height: 50,
+    borderRadius: 25,
     overflow: 'hidden',
     position: 'absolute',
     zIndex: 1,
@@ -446,6 +449,7 @@ const stylesB = StyleSheet.create({
   shapeLayer: {
     width: '100%',
     height: '100%',
+    borderRadius: 25,
     backgroundColor: 'rgb(36, 204, 182)',
     justifyContent: 'center',
     alignItems: 'center',

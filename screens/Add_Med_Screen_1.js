@@ -16,7 +16,7 @@ const Add_Med_Screen_1 = () => {
   const [nazwa, setNazwa] = useState('')
   const [typLeku, setTypLeku] = useState('');
   const [komentarz, setKomentarz] = useState('');
-  const [producent, setManufacturer] = useState('');
+  const [manufacturer, setManufacturer] = useState('');
   const [dosage, setDosage] = useState('');
 
   const handleNazwaLekuChange = (value) => {
@@ -45,7 +45,7 @@ const Add_Med_Screen_1 = () => {
       nazwa,
       typLeku,
       komentarz,
-      producent,
+      manufacturer,
       dosage,
     });
   };
@@ -77,14 +77,14 @@ const Add_Med_Screen_1 = () => {
           <DoseText />
           <DoseBox value={dosage} onChangeText={handleDosageChange} />
           <ManufacturerText />
-          <ManufacturerBox value={producent} onChangeText={handleProducentChange} />
+          <ManufacturerBox value={manufacturer} onChangeText={handleProducentChange} />
           <CommentText />
           <CommentBox value={komentarz} onChangeText={handleKomentarzChange} />
           <NextButton navigation={navigation} onPress={handleNext} />
           <DolnyPanel />
           <HomeIcon navigation={navigation} />
-          <PillIcon />
-          <HeadIcon />
+          <PillIcon navigation={navigation} />
+          <HeadIcon navigation={navigation} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -186,7 +186,7 @@ const stylesT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '16%',
+    top: '15.5%',
     left: '15%',
   },
   text: {
@@ -209,7 +209,7 @@ const WhichMedBox = ({ value, onChangeText }) => {
         style={[stylesW.input, { width: 378, height: 65 }]}
         value={value}
         onChangeText={onChangeText}
-        placeholder="Type here..."
+        placeholder="Wpisz tutaj..."
         placeholderTextColor="white"
       />
 
@@ -229,7 +229,7 @@ const stylesW = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '21%',
+    top: '20%',
     left: '5%',
   },
   background: {
@@ -274,7 +274,7 @@ const stylesTT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '30%',
+    top: '28.5%',
     left: '15%',
   },
   text: {
@@ -314,7 +314,7 @@ const stylesTB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '35%',
+    top: '33%',
     left: '5%',
 
   },
@@ -374,7 +374,7 @@ const stylesDT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '44%',
+    top: '42%',
     left: '15%',
   },
   text: {
@@ -414,7 +414,7 @@ const stylesDB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '49%',
+    top: '47%',
     left: '5%',
 
   },
@@ -462,7 +462,7 @@ const stylesMT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '57%',
+    top: '55.5%',
     left: '15%',
   },
   text: {
@@ -502,7 +502,7 @@ const stylesMB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '61%',
+    top: '60%',
     left: '5%',
 
   },
@@ -551,7 +551,7 @@ const stylesCT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '69%',
+    top: '68.5%',
     left: '15%',
   },
   text: {
@@ -572,7 +572,7 @@ const CommentBox = ({ value, onChangeText }) => {
         style={[stylesCB.input, { width: 378, height: 65 }]}
         value={value}
         onChangeText={onChangeText}
-        placeholder="Type here..."
+        placeholder="Wpisz tutaj..."
         placeholderTextColor="white"
       />
     </View>
@@ -634,7 +634,7 @@ const stylesNB = StyleSheet.create({
     width: 129,
     height: 45,
     position: 'absolute',
-    top: 710,
+    top: 715,
     left: 149,
     borderRadius: 22.5,
     justifyContent: 'center',
@@ -718,15 +718,15 @@ const HomeIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
       <View style={stylesDP.iconContainer}>
-        <Icon name="home" size={30} color="#fff" />
+        <Icon name="home" size={30} color="#24cccc" />
       </View>
     </TouchableOpacity>
   );
 }
 
-const PillIcon = () => {
+const PillIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity  onPress={() => navigation.navigate("MedList_Screen")}>
       <View style={{ bottom: '-2210%', left: '45%' }}>
         <MIcon name="pill" size={30} color="#24cccc" />
       </View>
@@ -734,9 +734,9 @@ const PillIcon = () => {
   );
 };
 
-const HeadIcon = () => {
+const HeadIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Profil_Screen")}>
       <View style={{ bottom: '-2110%', left: '80%' }}>
         <MIcon name="head" size={30} color="#24cccc" />
       </View>

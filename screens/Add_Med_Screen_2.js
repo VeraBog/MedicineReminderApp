@@ -17,17 +17,13 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
 
   const navigation = useNavigation();
   const route = useRoute();
-  const { nazwa, typLeku, komentarz, producent, dosage } = route.params;
+  const { nazwa, typLeku, komentarz, manufacturer, dosage } = route.params;
   // const [producent, setManufacturer] = useState('');
   //const [dosage, setDosage] = useState('');
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('');
 
-  /*  const handleProducentChange = (value) => {
-      setManufacturer(value);
-    };
-    const handleDosageChange = (value) => {
-      setDosage(value); };*/
+
 
   const handleDateChange = (event, selectedDate) => {
     setDate(selectedDate || date);
@@ -51,17 +47,17 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
       const nazwaValue = nazwa || '';
       const typLekuValue = typLeku || '';
       const komentarzValue = komentarz || '';
-      const manufacturerValue = producent || '';
+      const manufacturerValue = manufacturer || '';
       const dosageValue = dosage || '';
       const dateValue = date;
       const timeValue = time;
 
-      console.log(nazwa, typLeku, komentarz, producent, dosage, date, time);
+      console.log(nazwa, typLeku, komentarz, manufacturer, dosage, date, time);
       const data = {
         nazwa: nazwaValue,
         typLeku: typLekuValue,
         komentarz: komentarzValue,
-        producent: manufacturerValue,
+        manufacturer: manufacturerValue,
         dosage: dosageValue,
         dateValue: date,
         timeValue: time,
@@ -75,18 +71,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
         })
         .catch((err) => console.log("ERR", err));
 
-      /*  axios.post("http://192.168.0.53:8000/Add_Med_Screen_2", {  //trzeba zmienić za każdym razem bo inaczej się nie połączy Ipv4 adress z komendy ipconfig
-          nazwa: nazwaValue,                                      // było 
-          typLeku: typLekuValue,
-          komentarz: komentarzValue,
-          dateValue: date,
-          timeValue: time,
-        })
-          .then((response) => {
-            console.log("RESP");
-            Alert.alert('Dodano Leki'); // w sumie to nie wiem czemu nie ma komunikatu
-          })
-          .catch((err) => console.log("ERR", err));*/
+
 
 
 
@@ -128,12 +113,12 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
               time={time}
               setTime={setTime} />
           </SafeAreaView>
-          
+
           <NextButton navigation={navigation} onPress={handleAddMed} />
           <DolnyPanel />
           <HomeIcon navigation={navigation} />
-          <PillIcon />
-          <HeadIcon />
+          <PillIcon navigation={navigation} />
+          <HeadIcon navigation={navigation} />
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -308,184 +293,10 @@ const stylesDTP = StyleSheet.create({
     height: 40,
   },
 });
-const DoseText = () => {
-  return (
-    <View style={stylesT.container}>
-      <Text style={stylesT.text}>
-        Dawka(mg)
-      </Text>
-    </View>
-  );
-}
-
-const stylesT = StyleSheet.create({
-  container: {
-    backgroundColor: '#0C1320',
-    width: 299,
-    height: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: '52%',
-    left: '15%',
-  },
-  text: {
-    color: '#fff',
-    fontFamily: 'Helvetica-Bold',
-    fontSize: 24,
-    lineHeight: 28,
-    textAlign: 'center',
-  },
-});
-
-const DoseBox = ({ value, onChangeText }) => {
-  // const [selectedValue, setSelectedValue] = useState();
-  return (
-    <View style={stylesDB.container}>
-      <View style={stylesDB.background} />
-      <View style={stylesDB.stroke} />
-      <TextInput
-        style={[stylesDB.input, { width: 378, height: 65 }]}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder="Wpisz tutaj..."
-        placeholderTextColor="white"
-      />
-
-    </View>
-  );
-}
-
-const stylesDB = StyleSheet.create({
-  container: {
-    backgroundColor: '#0C1F37',
-    width: 378,
-    height: 63,
-    borderRadius: 25,
-    borderWidth: 2,
-    borderColor: '#62F0F0',
-    overflow: 'hidden',
-    position: 'absolute',
-    top: '56%',
-    left: '5%',
-
-  },
-  background: {
-    backgroundColor: '#0C1F37',
-    flex: 1,
-  },
-  stroke: {
-    position: 'absolute',
-    top: -1,
-    left: -1,
-    right: -1,
-    bottom: -1,
-    borderRadius: 26,
-    borderWidth: 2,
-    borderColor: '#62F0F0',
-  },
-  input: {
-    color: 'white',
-    backgroundColor: '#0C1F37',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    width: '100%',
-    height: '100%',
-  },
 
 
-});
 
-const ManufacturerText = () => {
-  return (
-    <View style={stylesMT.container}>
-      <Text style={stylesMT.text}>
-        Producent
-      </Text>
-    </View>
-  );
-}
-
-const stylesMT = StyleSheet.create({
-  container: {
-    backgroundColor: '#0C1320',
-    width: 299,
-    height: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'absolute',
-    top: '64%',
-    left: '15%',
-  },
-  text: {
-    color: '#fff',
-    fontFamily: 'Helvetica-Bold',
-    fontSize: 24,
-    lineHeight: 28,
-    textAlign: 'center',
-  },
-});
-
-const ManufacturerBox = ({ value, onChangeText }) => {
-  // const [selectedValue, setSelectedValue] = useState();
-  return (
-    <View style={stylesMB.container}>
-      <View style={stylesMB.background} />
-      <View style={stylesMB.stroke} />
-      <TextInput
-        style={[stylesMB.input, { width: 378, height: 65 }]}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder="Wpisz tutaj..."
-        placeholderTextColor="white"
-      />
-
-    </View>
-  );
-}
-
-const stylesMB = StyleSheet.create({
-  container: {
-    backgroundColor: '#0C1F37',
-    width: 378,
-    height: 63,
-    borderRadius: 25,
-    borderWidth: 2,
-    borderColor: '#62F0F0',
-    overflow: 'hidden',
-    position: 'absolute',
-    top: '68%',
-    left: '5%',
-
-  },
-  background: {
-    backgroundColor: '#0C1F37',
-    flex: 1,
-  },
-  stroke: {
-    position: 'absolute',
-    top: -1,
-    left: -1,
-    right: -1,
-    bottom: -1,
-    borderRadius: 26,
-    borderWidth: 2,
-    borderColor: '#62F0F0',
-  },
-  input: {
-    color: 'white',
-    backgroundColor: '#0C1F37',
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    width: '100%',
-    height: '100%',
-  },
-
-
-});
-
-
-const NextButton = ({ navigation, onPress }) => {
+const NextButton = ({ onPress }) => {
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={stylesNB.container} >
@@ -501,7 +312,7 @@ const stylesNB = StyleSheet.create({
     width: 129,
     height: 45,
     position: 'absolute',
-    top: -10,
+    top: -70,
     left: 149,
     borderRadius: 22.5,
     justifyContent: 'center',
@@ -585,15 +396,15 @@ const HomeIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
       <View style={stylesDP.iconContainer}>
-        <Icon name="home" size={30} color="#fff" />
+        <Icon name="home" size={30} color="#24cccc" />
       </View>
     </TouchableOpacity>
   );
 }
 
-const PillIcon = () => {
+const PillIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("MedList_Screen")}>
       <View style={{ bottom: '65%', left: '45%' }}>
         <MIcon name="pill" size={30} color="#24cccc" />
       </View>
@@ -601,9 +412,9 @@ const PillIcon = () => {
   );
 };
 
-const HeadIcon = () => {
+const HeadIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Profile_Screen")}>
       <View style={{ bottom: '170%', left: '80%' }}>
         <MIcon name="head" size={30} color="#24cccc" />
       </View>

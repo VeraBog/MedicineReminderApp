@@ -51,7 +51,7 @@ const MedList_Screen = () => {
       <DolnyPanel />
       <HomeIcon navigation={navigation} />
       <PillIcon />
-      <HeadIcon />
+      <HeadIcon navigation={navigation} />
     </View>
   );
 };
@@ -239,39 +239,6 @@ const stylesO = StyleSheet.create({
   },
 });
 
-/*const NextButton = ({ navigation }) => {
-    return (
-      <TouchableOpacity onPress={() => navigation.navigate("Add_Med_Screen_2")} >
-        <View style={stylesNB.container}>
-        <Text style={stylesNB.text}>Dalej</Text>
-  </View>
-      </TouchableOpacity>
-    );
-  }
-  
-  const stylesNB = StyleSheet.create({
-    container: {
-      backgroundColor: '#24CCCC',
-      width: 129,
-      height: 45,
-      position: 'absolute',
-      top: 671,
-      left: 149,
-      borderRadius: 22.5,
-      justifyContent: 'center',
-      alignItems: 'center',
-      },
-      text: {
-      color: 'black',
-      fontSize: 18,
-      fontFamily: 'Helvetica-Bold',
-      lineHeight: 19,
-      textAlign: 'center',
-      paddingTop: 8,
-      },
-      });*/
-
-
 const DolnyPanel = () => {
   return (
     <View style={stylesDP.container}>
@@ -339,7 +306,7 @@ const HomeIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Main_Screen")}>
       <View style={stylesDP.iconContainer}>
-        <Icon name="home" size={30} color="#fff" />
+        <Icon name="home" size={30} color="#24cccc" />
       </View>
     </TouchableOpacity>
   );
@@ -349,15 +316,15 @@ const PillIcon = () => {
   return (
     <TouchableOpacity>
       <View style={{ bottom: '-2210%', left: '45%' }}>
-        <MIcon name="pill" size={30} color="#24cccc" />
+        <MIcon name="pill" size={30} color="#fff" />
       </View>
     </TouchableOpacity>
   );
 };
 
-const HeadIcon = () => {
+const HeadIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Profil_Screen")}>
       <View style={{ bottom: '-2110%', left: '80%' }}>
         <MIcon name="head" size={30} color="#24cccc" />
       </View>

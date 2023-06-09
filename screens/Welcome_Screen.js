@@ -70,7 +70,7 @@ return (
             <Animatable.Image
                 animation="fadeIn"
                 easing="ease-in-out"
-                source={require('../assets/pill_icon.jpg')}
+                source={require('../assets/pill.png')}
                 style={{ width: 100, height: 100 }}
             />
         </View>

@@ -154,7 +154,7 @@ const FrameComponent = () => {
         <Animatable.Image
           animation="fadeIn"
           easing="ease-in-out"
-          source={require('../assets/pill_icon.jpg')}
+          source={require('../assets/pill.png')}
           style={{ width: 100, height: 100 }}
         />
       </View>
@@ -240,7 +240,7 @@ const BoxH = ({ value, onChangeText }) => {
     <View style={styl.container}>
       <View style={styl.shadows}>
         <View style={styl.shapes}>
-          <Text style={styl.text}>Hasło</Text>
+          <Text style={styl.text}></Text>
           <TextInput
             style={styles.textInput}
             placeholder="Hasło"
