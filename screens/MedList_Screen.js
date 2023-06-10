@@ -24,7 +24,7 @@ const MedList_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.6:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
@@ -43,8 +43,8 @@ const MedList_Screen = () => {
         //backgroundColor: 'rgba(12, 35, 64, 1)',
       }}>
 
-      <NotificationIcon />
-      <Speaker />
+      <NotificationIcon navigation={navigation} />
+      <Speaker navigation={navigation}/>
       <MedListText />
 
       <Okienko medicineData={medicineData} />
@@ -57,9 +57,9 @@ const MedList_Screen = () => {
 };
 
 
-const NotificationIcon = () => {
+const NotificationIcon = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Notification_Screen")}>
       <View style={{ top: '270%', left: '5%' }}>
         <IonIcon name="notifications" size={30} color="#24CCCC" />
         <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>
@@ -68,9 +68,9 @@ const NotificationIcon = () => {
   );
 };
 
-const Speaker = () => {
+const Speaker = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("SoundSwitch")}>
       <View style={styles.volumeDownContainer}>
         <View style={styles.volumeDownIcon}>
           <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />

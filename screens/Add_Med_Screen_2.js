@@ -64,7 +64,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
       };
 
 
-      axios.post("http://192.168.0.6:8000/Add_Med_Screen_2", data)
+      axios.post("http://192.168.0.53:8000/Add_Med_Screen_2", data)
         .then((response) => {
           console.log("RESP", response);
           Alert.alert('Dodano Leki');
@@ -92,8 +92,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
     });
   }, []); // tu się w sumie usuwa nagłowek
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
-      <ScrollView contentContainerStyle={stylesK.container}>
+    
         <View
           style={{
             width: 428,
@@ -103,8 +102,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
 
           }}>
 
-          <NotificationIcon />
-          <Speaker />
+          
           <AddText />
 
           <SafeAreaView style={{ flex: 1 }}>
@@ -120,31 +118,15 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
           <PillIcon navigation={navigation} />
           <HeadIcon navigation={navigation} />
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+     
   );
 };
 
-const stylesK = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    backgroundColor: '#24cccc',
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingTop: 50,
-    paddingBottom: 16,
-  },
-  content: {
-    width: 428,
-    height: 926,
-    borderRadius: 34,
-  },
-  // Reszta styli
-});
 
-const NotificationIcon = () => {
+
+/*const NotificationIcon = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Notification_Screen")}>
       <View style={{ top: '270%', left: '5%' }}>
         <IonIcon name="notifications" size={30} color="#24CCCC" />
         <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>
@@ -153,9 +135,9 @@ const NotificationIcon = () => {
   );
 };
 
-const Speaker = () => {
+const Speaker = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("SoundSwitch")}>
       <View style={styles.volumeDownContainer}>
         <View style={styles.volumeDownIcon}>
           <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />
@@ -163,7 +145,7 @@ const Speaker = () => {
       </View>
     </TouchableOpacity>
   );
-}
+}*/
 
 const styles = StyleSheet.create({
   volumeDownContainer: {

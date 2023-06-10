@@ -1,5 +1,5 @@
-import React, { useLayoutEffect, useState, useContext } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, Alert } from 'react-native';
+import React, { useLayoutEffect, useState, useContext, useEffect } from 'react';
+import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, Alert, Button } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
 import { AntDesign } from '@expo/vector-icons'; // to do ikonki  głośnika
@@ -8,7 +8,7 @@ import IonIcon from 'react-native-vector-icons/Ionicons'; // do tabletki
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { LoadMed } from '../controller/MedicineController'; // Importuj funkcję LoadMed z kontrolera
 import { AuthContext } from '../context/AuthContext';
-
+import { registerForPushNotificationsAsync, sendPushNotification } from '../Notifications/PushNotifications'
 import axios from 'axios';
 
 
@@ -19,6 +19,11 @@ const Main_Screen = () => {
   const [showNotification, setShowNotification] = useState(false);
   const navigation = useNavigation();
   const [login, setUsername] = useState('');
+
+  const handleSendNotification = async () => {
+    await sendPushNotification();
+  };
+
 
   useLayoutEffect(() => {
     fetchMedicineData();
@@ -31,7 +36,7 @@ const Main_Screen = () => {
 
   const fetchMedicineData = async () => {
     try {
-      const response = await axios.get('http://192.168.0.6:8000/Main_Screen');
+      const response = await axios.get('http://192.168.0.53:8000/Main_Screen');
       const data = response.data;
       console.log('z metody fetchMedicineData', response.data)
       setMedicineData(data);
@@ -72,7 +77,7 @@ const Main_Screen = () => {
         borderRadius: 34,
         //backgroundColor: 'rgba(12, 35, 64, 1)',  // w okienko jeszcze <BigText  login={login} />
       }}>
-      <NotificationIcon />
+      <NotificationIcon navigation={navigation}/>
       <Speaker navigation={navigation} />
       <BigText user={user.username}/>
       <Okienko medicineData={medicineData} />
@@ -82,15 +87,17 @@ const Main_Screen = () => {
       <HomeIcon />
       <PillIcon navigation={navigation} />
       <HeadIcon navigation={navigation} />
-
+      <TouchableOpacity style={styles.button} onPress={handleSendNotification}>
+        <Text style={styles.buttonText}>Wyślij powiadomienie</Text>
+      </TouchableOpacity>
 
     </View>
   );
 };
 
-const NotificationIcon = () => {
+const NotificationIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Notification_Screen")}>
       <View style={{ top: '270%', left: '5%' }}>
         <IonIcon name="notifications" size={30} color="#24CCCC" />
         <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>

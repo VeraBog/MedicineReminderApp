@@ -67,8 +67,7 @@ const Add_Med_Screen_1 = () => {
             //backgroundColor: 'rgba(12, 35, 64, 1)',
           }}>
 
-          <NotificationIcon />
-          <Speaker />
+         
           <AddText />
           <WhichMedText />
           <WhichMedBox value={nazwa} onChangeText={handleNazwaLekuChange} />
@@ -108,9 +107,9 @@ const stylesK = StyleSheet.create({
   // Reszta styli
 });
 
-const NotificationIcon = () => {
+/*const NotificationIcon = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Notification_Screen")}>
       <View style={{ top: '270%', left: '5%' }}>
         <IonIcon name="notifications" size={30} color="#24CCCC" />
         <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>
@@ -119,9 +118,9 @@ const NotificationIcon = () => {
   );
 };
 
-const Speaker = () => {
+const Speaker = ({navigation}) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("SoundSwitch")}>
       <View style={styles.volumeDownContainer}>
         <View style={styles.volumeDownIcon}>
           <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />
@@ -129,7 +128,7 @@ const Speaker = () => {
       </View>
     </TouchableOpacity>
   );
-}
+}*/
 
 const styles = StyleSheet.create({
   volumeDownContainer: {
@@ -162,7 +161,7 @@ const styles = StyleSheet.create({
 
 const AddText = () => {
   return (
-    <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'absolute', bottom: '86%', left: 0, right: 0 }}>
+    <Animatable.View animation="fadeIn" easing="ease-in-out" style={{ position: 'absolute', bottom: '89%', left: 0, right: 0 }}>
       <Text style={{ color: '#fff', fontSize: 32, fontFamily: 'Helvetica-Bold', lineHeight: 46, textAlign: 'center' }}>Dodaj lek</Text>
     </Animatable.View>
   );
@@ -634,7 +633,7 @@ const stylesNB = StyleSheet.create({
     width: 129,
     height: 45,
     position: 'absolute',
-    top: 715,
+    top: 765,
     left: 149,
     borderRadius: 22.5,
     justifyContent: 'center',
@@ -666,8 +665,8 @@ const DolnyPanel = () => {
 
 const stylesDP = StyleSheet.create({
   container: {
-    height: 100,
-    top: '83%',
+    height: 150,
+    top: '89%',
     backgroundColor: '#0C1F32',
     shadowColor: '#000',
     shadowOpacity: 1,

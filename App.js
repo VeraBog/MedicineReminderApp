@@ -13,6 +13,7 @@ import Add_Med_Screen_2 from './screens/Add_Med_Screen_2';
 import SoundSwitch from './screens/SoundSwitch';
 import Profil_Screen from './screens/Profil_Screen';
 import MedList_Screen from './screens/MedList_Screen';
+import Notification_Screen from './screens/Notification_Screen';
 
 
 const Stack = createNativeStackNavigator();
@@ -32,6 +33,7 @@ export default function App() {
             <Stack.Screen name="SoundSwitch" component={SoundSwitch} />
             <Stack.Screen name="Profil_Screen" component={Profil_Screen} />
             <Stack.Screen name="MedList_Screen" component={MedList_Screen} />
+            <Stack.Screen name="Notification_Screen" component={Notification_Screen} />
 
           </Stack.Navigator>
         </NavigationContainer>

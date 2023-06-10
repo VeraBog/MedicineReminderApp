@@ -29,8 +29,8 @@ const Profil_Screen = () => {
         //backgroundColor: 'rgba(12, 35, 64, 1)',
       }}>
 
-      <NotificationIcon />
-      <Speaker />
+      <NotificationIcon navigation={navigation} />
+      <Speaker navigation={navigation} />
       <ProfilText />
 
       <NextButton navigation={navigation} />
@@ -43,9 +43,9 @@ const Profil_Screen = () => {
 };
 
 
-const NotificationIcon = () => {
+const NotificationIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("Notification_Screen")}>
       <View style={{ top: '270%', left: '5%' }}>
         <IonIcon name="notifications" size={30} color="#24CCCC" />
         <Text style={{ position: 'absolute', top: -5, right: -10, backgroundColor: 'red', borderRadius: 8, width: 16, height: 16, textAlign: 'center', color: 'white', fontSize: 12 }}>1</Text>
@@ -54,9 +54,9 @@ const NotificationIcon = () => {
   );
 };
 
-const Speaker = () => {
+const Speaker = ({ navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => navigation.navigate("SoundSwitch")}>
       <View style={styles.volumeDownContainer}>
         <View style={styles.volumeDownIcon}>
           <AntDesign name="sound" size={24} color="rgba(98, 243, 243, 1)" />

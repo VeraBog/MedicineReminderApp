@@ -33,7 +33,7 @@ const Sign_In_Screen = () => {
         throw new Error('Wprowadź login i hasło');
       }
       axios
-        .post("http://192.168.0.6:8000/Sign_In_Screen", {
+        .post("http://192.168.0.53:8000/Sign_In_Screen", {
           login: loginValue,
           password: passwordValue,
         })

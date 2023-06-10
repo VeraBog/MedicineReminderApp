@@ -31,7 +31,9 @@
     "tailwindcss-react-native": "^1.7.10",
     "react-native-web": "~0.18.10",
     "react-dom": "18.2.0",
-    "@expo/webpack-config": "^18.0.1"
+    "@expo/webpack-config": "^18.0.1",
+    "expo-notifications": "~0.18.1",
+    "expo-device": "~5.2.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
