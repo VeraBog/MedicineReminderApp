@@ -2,7 +2,7 @@ import React, { useLayoutEffect, useState } from 'react';
 import {
   StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity,
   Platform,
-  Dimensions, TextInput, KeyboardAvoidingView
+  Dimensions, TextInput, KeyboardAvoidingView, Alert
 } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -77,7 +77,7 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
 
 
 
-
+      Alert.alert('Lek został dodany do bazy danych.');
       navigation.navigate('Main_Screen');
     } catch (error) {
       console.error(error);
@@ -92,33 +92,33 @@ const Add_Med_Screen_2 = () => {  // albo w tym route?
     });
   }, []); // tu się w sumie usuwa nagłowek
   return (
-    
-        <View
-          style={{
-            width: 428,
-            height: 926,
-            backgroundColor: '#0C1320',
-            borderRadius: 34,
 
-          }}>
+    <View
+      style={{
+        width: 428,
+        height: 926,
+        backgroundColor: '#0C1320',
+        borderRadius: 34,
 
-          
-          <AddText />
+      }}>
 
-          <SafeAreaView style={{ flex: 1 }}>
-            <DateTimePickerScreen date={date}
-              setDate={setDate}
-              time={time}
-              setTime={setTime} />
-          </SafeAreaView>
 
-          <NextButton navigation={navigation} onPress={handleAddMed} />
-          <DolnyPanel />
-          <HomeIcon navigation={navigation} />
-          <PillIcon navigation={navigation} />
-          <HeadIcon navigation={navigation} />
-        </View>
-     
+      <AddText />
+
+      <SafeAreaView style={{ flex: 1 }}>
+        <DateTimePickerScreen date={date}
+          setDate={setDate}
+          time={time}
+          setTime={setTime} />
+      </SafeAreaView>
+
+      <NextButton navigation={navigation} onPress={handleAddMed} />
+      <DolnyPanel />
+      <HomeIcon navigation={navigation} />
+      <PillIcon navigation={navigation} />
+      <HeadIcon navigation={navigation} />
+    </View>
+
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useState } from 'react';
-import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, ScrollView, Text, View, Image, SafeAreaView, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView, Modal } from 'react-native';
 import { Picker } from '@react-native-picker/picker'
 import { useNavigation } from '@react-navigation/native';
 import * as Animatable from 'react-native-animatable';
@@ -18,6 +18,7 @@ const Add_Med_Screen_1 = () => {
   const [komentarz, setKomentarz] = useState('');
   const [manufacturer, setManufacturer] = useState('');
   const [dosage, setDosage] = useState('');
+  const [isPickerVisible, setIsPickerVisible] = useState(false);
 
   const handleNazwaLekuChange = (value) => {
     setNazwa(value);
@@ -50,6 +51,11 @@ const Add_Med_Screen_1 = () => {
     });
   };
 
+  const togglePicker = () => {
+    setIsPickerVisible(!isPickerVisible);
+  };
+
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerShown: false,
@@ -67,12 +73,36 @@ const Add_Med_Screen_1 = () => {
             //backgroundColor: 'rgba(12, 35, 64, 1)',
           }}>
 
-         
+
           <AddText />
           <WhichMedText />
           <WhichMedBox value={nazwa} onChangeText={handleNazwaLekuChange} />
           <WhichTypeText />
-          <WhichTypeBox value={typLeku} onChangeText={handleTypLekuChange} />
+          <WhichTypeBox value={typLeku} onChangeText={handleTypLekuChange} togglePicker={togglePicker} />
+
+          <Modal visible={isPickerVisible} animationType="slide" transparent>
+            <View style={stylesm.modalContainer}>
+              <View style={stylesm.modalContent}>
+                <Picker
+                  selectedValue={typLeku}
+                  onValueChange={(itemValue) => {
+                    setTypLeku(itemValue);
+                    setIsPickerVisible(false);
+                  }}
+                >
+                  <Picker.Item label="Immunosupresant" value="Immunosupresant" />
+                  <Picker.Item label="Przeciwbólowe" value="Przeciwbólowe" />
+                  <Picker.Item label="Antybiotyk" value="Antybiotyk" />
+                  <Picker.Item label="Antykoncepcyjne" value="Antykoncepcyjne" />
+                  <Picker.Item label="Przeciwzapalne" value="Przeciwzapalne" />
+                  <Picker.Item label="Przeciwwirusowe" value="Przeciwwirusowe" />
+                  <Picker.Item label="Przeciwnadciśnieniowe" value="Przeciwnadciśnieniowe" />
+                  <Picker.Item label="Przeciwdepresyjne" value="Przeciwdepresyjne" />
+                  <Picker.Item label="Przeciwhistaminowe" value="Przeciwhistaminowe" />
+                </Picker>
+              </View>
+            </View>
+          </Modal>
           <DoseText />
           <DoseBox value={dosage} onChangeText={handleDosageChange} />
           <ManufacturerText />
@@ -89,6 +119,37 @@ const Add_Med_Screen_1 = () => {
     </KeyboardAvoidingView>
   );
 };
+
+const stylesm = StyleSheet.create({
+  label: {
+    color: 'white',
+    fontSize: 16,
+    marginBottom: 10,
+  },
+  input: {
+    backgroundColor: '#3D4754',
+    borderRadius: 16,
+    padding: 12,
+    marginBottom: 16,
+  },
+  inputText: {
+    color: 'white',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    borderRadius: 16,
+    padding: 20,
+    width: '80%',
+
+  },
+});
+
 
 const stylesK = StyleSheet.create({
   container: {
@@ -185,7 +246,8 @@ const stylesT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '15.5%',
+    
+    top: '30.5%',
     left: '15%',
   },
   text: {
@@ -228,8 +290,9 @@ const stylesW = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '20%',
+    top: '34.5%',
     left: '5%',
+   
   },
   background: {
     backgroundColor: '#0C1F37',
@@ -273,7 +336,7 @@ const stylesTT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '28.5%',
+    top: '17%',
     left: '15%',
   },
   text: {
@@ -285,19 +348,15 @@ const stylesTT = StyleSheet.create({
   },
 });
 
-const WhichTypeBox = ({ value, onChangeText }) => {
+const WhichTypeBox = ({ value, onChangeText, togglePicker }) => {
   // const [selectedValue, setSelectedValue] = useState();
   return (
     <View style={stylesTB.container}>
       <View style={stylesTB.background} />
       <View style={stylesTB.stroke} />
-      <TextInput
-        style={[stylesTB.input, { width: 378, height: 65 }]}
-        value={value}
-        onChangeText={onChangeText}
-        placeholder="Wpisz tutaj..."
-        placeholderTextColor="white"
-      />
+      <TouchableOpacity style={stylesW.input} onPress={togglePicker}>
+      <Text style={[stylesTB.inputText, stylesTB.togglePicker]}>{value}</Text>
+      </TouchableOpacity>
 
     </View>
   );
@@ -309,13 +368,17 @@ const stylesTB = StyleSheet.create({
     width: 378,
     height: 63,
     borderRadius: 25,
-    borderWidth: 2,
+    borderWidth: 4,
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '33%',
+    top: '22%',
     left: '5%',
-
+  },
+   inputText: {
+    color: '#FFFFFF', // Zmień kolor tekstu na biały
+    fontSize: 16, // Zwiększ rozmiar tekstu, jeśli to konieczne
+    textAlign: 'center', // Dodaj wyśrodkowanie tekstu
   },
   background: {
     backgroundColor: '#0C1F37',
@@ -338,6 +401,14 @@ const stylesTB = StyleSheet.create({
     paddingVertical: 10,
     width: '100%',
     height: '100%',
+  },
+  togglePicker: {
+    color: '#FFFFFF',
+    fontSize: 26,
+    textAlign: 'center',
+    fontFamily: 'Helvetica-Bold',
+    paddingHorizontal: 10,
+    paddingVertical: 10,
   },
   /* pickerContainer: {
      position: 'absolute',
@@ -373,7 +444,7 @@ const stylesDT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '42%',
+    top: '43%',
     left: '15%',
   },
   text: {
@@ -413,7 +484,7 @@ const stylesDB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '47%',
+    top: '48%',
     left: '5%',
 
   },
@@ -461,7 +532,7 @@ const stylesMT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '55.5%',
+    top: '56.5%',
     left: '15%',
   },
   text: {
@@ -501,7 +572,7 @@ const stylesMB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '60%',
+    top: '61%',
     left: '5%',
 
   },
@@ -550,7 +621,7 @@ const stylesCT = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    top: '68.5%',
+    top: '69.5%',
     left: '15%',
   },
   text: {
@@ -588,7 +659,7 @@ const stylesCB = StyleSheet.create({
     borderColor: '#62F0F0',
     overflow: 'hidden',
     position: 'absolute',
-    top: '73%',
+    top: '74%',
     left: '5%',
   },
   background: {
@@ -725,7 +796,7 @@ const HomeIcon = ({ navigation }) => {
 
 const PillIcon = ({ navigation }) => {
   return (
-    <TouchableOpacity  onPress={() => navigation.navigate("MedList_Screen")}>
+    <TouchableOpacity onPress={() => navigation.navigate("MedList_Screen")}>
       <View style={{ bottom: '-2210%', left: '45%' }}>
         <MIcon name="pill" size={30} color="#24cccc" />
       </View>

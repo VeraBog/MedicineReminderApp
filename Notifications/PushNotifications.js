@@ -84,16 +84,51 @@ export async function sendPushNotification(expoPushToken, title, body, data) {
   });
 }
 
-export const createLocalNotification = async (title, body) => {
+/*export const createLocalNotification = async (title, body, time, medicineType) => {
+  const trigger = new Date(time);
   const identifier = await scheduleNotificationAsync({
     content: {
       title,
       body,
+      sound: 'default',
+      vibrate: [0, 250, 250, 250],
     },
-    trigger: null, // Możesz dostosować wyzwalacz powiadomienia
+    trigger, // Możesz dostosować wyzwalacz powiadomienia
   });
   console.log(`Utworzono lokalne powiadomienie z identyfikatorem: ${identifier}`);
+};*/
+
+export const createLocalNotification = async (title, body, time, medicineType) => {
+  const trigger = new Date(time);
+  let identifier;
+
+  if (medicineType === 'Immunosupresant') {
+    // Dla leków immunosupresyjnych możesz dostosować treść powiadomienia lub inne ustawienia
+    identifier = await scheduleNotificationAsync({
+      content: {
+        title: 'Przypomnienie o leku immunosupresyjnym',
+        body: `Przyjmij lek "${title}" - ${body} , pamiętaj bądź naczczo!`,
+        sound: 'default',
+        vibrate: [0, 250, 250, 250],
+      },
+      trigger,
+    });
+  } else {
+    // Dla innych leków
+    identifier = await scheduleNotificationAsync({
+      content: {
+        title,
+        body,
+        sound: 'default',
+        vibrate: [0, 250, 250, 250],
+      },
+      trigger,
+    });
+  }
+
+  console.log(`Utworzono lokalne powiadomienie z identyfikatorem: ${identifier}`);
 };
+
 
 /*export async function scheduleNotification(content, drugName, timeInSeconds) {
     const trigger = {

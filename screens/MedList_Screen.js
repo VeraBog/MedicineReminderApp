@@ -139,15 +139,16 @@ const Okienko = ({ medicineData }) => {
               <Text style={stylesO.medicineText}>
                 Producent: {medicine.manufacturer}
               </Text>
-              <Text style={stylesO.medicineText}>
+              <Text  style={[
+                  stylesO.medicineText,
+                  medicine.typeMed === "Immunosupresant" && { color: "red" },
+                ]}>
                 Typ Leku: {medicine.typeMed}
               </Text>
               <Text style={stylesO.medicineText}>
                 Data: {medicine.date}
               </Text>
-              <Text style={stylesO.medicineText}>
-                Czas: {medicine.time}
-              </Text>
+             
               <Text style={stylesO.medicineText}>
                 Komentarz: {medicine.comment}
               </Text>
@@ -255,7 +256,7 @@ const DolnyPanel = () => {
 const stylesDP = StyleSheet.create({
   container: {
     height: 100,
-    top: '83%',
+    top: '85.5%',
     backgroundColor: '#0C1F32',
     shadowColor: '#000',
     shadowOpacity: 1,
@@ -291,7 +292,7 @@ const stylesDP = StyleSheet.create({
     borderRadius: 20,
     width: 40,
     height: 40,
-    bottom: '-1740%',
+    bottom: '-1770%',
     left: '10%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -315,7 +316,7 @@ const HomeIcon = ({ navigation }) => {
 const PillIcon = () => {
   return (
     <TouchableOpacity>
-      <View style={{ bottom: '-2210%', left: '45%' }}>
+      <View style={{ bottom: '-2240%', left: '45%' }}>
         <MIcon name="pill" size={30} color="#fff" />
       </View>
     </TouchableOpacity>
@@ -325,7 +326,7 @@ const PillIcon = () => {
 const HeadIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("Profil_Screen")}>
-      <View style={{ bottom: '-2110%', left: '80%' }}>
+      <View style={{ bottom: '-2150%', left: '80%' }}>
         <MIcon name="head" size={30} color="#24cccc" />
       </View>
     </TouchableOpacity>

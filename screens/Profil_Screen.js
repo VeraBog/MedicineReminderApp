@@ -18,7 +18,7 @@ const Profil_Screen = () => {
       headerShown: false,
     });
   }, []); // tu się w sumie usuwa nagłowek
-  
+
   return (
     <View
       style={{
@@ -156,7 +156,7 @@ const DolnyPanel = () => {
 const stylesDP = StyleSheet.create({
   container: {
     height: 100,
-    top: '83%',
+    top: '85.5%',
     backgroundColor: '#0C1F32',
     shadowColor: '#000',
     shadowOpacity: 1,
@@ -192,7 +192,7 @@ const stylesDP = StyleSheet.create({
     borderRadius: 20,
     width: 40,
     height: 40,
-    bottom: '-1740%',
+    bottom: '-1770%',
     left: '10%',
     alignItems: 'center',
     justifyContent: 'center',
@@ -216,7 +216,7 @@ const HomeIcon = ({ navigation }) => {
 const PillIcon = ({ navigation }) => {
   return (
     <TouchableOpacity onPress={() => navigation.navigate("MedList_Screen")}>
-      <View style={{ bottom: '-2210%', left: '45%' }}>
+      <View style={{ bottom: '-2240%', left: '45%' }}>
         <MIcon name="pill" size={30} color="#24cccc" />
       </View>
     </TouchableOpacity>
@@ -226,7 +226,7 @@ const PillIcon = ({ navigation }) => {
 const HeadIcon = () => {
   return (
     <TouchableOpacity>
-      <View style={{ bottom: '-2110%', left: '80%' }}>
+      <View style={{ bottom: '-2150%', left: '80%' }}>
         <MIcon name="head" size={30} color="#fff" />
       </View>
     </TouchableOpacity>
